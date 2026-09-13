@@ -16,7 +16,7 @@
 
 
   <!-- =================================================
-       QR SCANNER LIBRARY
+       QR SCANNER
        ================================================= -->
 
   <script
@@ -49,10 +49,6 @@
       margin: 0 auto;
     }
 
-
-    /* =================================================
-       MAIN CARD
-       ================================================= */
 
     .card {
       background: #fff;
@@ -98,7 +94,7 @@
 
 
     /* =================================================
-       START CAMERA BUTTON
+       BUTTON
        ================================================= */
 
     .button {
@@ -216,30 +212,36 @@
 
 
     /* =================================================
-       PARTICIPANT AREA
+       OPEN APPS SCRIPT
        ================================================= */
 
-    .result-title {
-      margin-top: 28px;
-      margin-bottom: 12px;
-      font-size: 18px;
+    .webapp-box {
+      display: none;
+      margin-top: 20px;
+      padding: 18px;
+      background: #eef6f8;
+      border-radius: 15px;
+      text-align: center;
+    }
+
+
+    .webapp-title {
+      font-size: 16px;
       font-weight: 700;
       color: #555;
     }
 
 
-    #webAppFrame {
-      display: none;
-      width: 100%;
-      height: 760px;
-      border: 2px solid #ddd;
-      border-radius: 18px;
-      background: #fff;
+    .webapp-status {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #777;
+      line-height: 1.5;
     }
 
 
     /* =================================================
-       MANUAL BIB
+       MANUAL SEARCH
        ================================================= */
 
     .manual {
@@ -358,11 +360,6 @@
         margin-top: 10px;
       }
 
-
-      #webAppFrame {
-        height: 700px;
-      }
-
     }
 
   </style>
@@ -413,6 +410,10 @@
 
       </button>
 
+
+      <!-- =================================================
+           STOP CAMERA
+           ================================================= -->
 
       <button
         id="stopButton"
@@ -468,30 +469,34 @@
 
 
       <!-- =================================================
-           WEB APP RESULT
+           WEB APP STATUS
            ================================================= -->
 
       <div
-        id="resultTitle"
-        class="result-title"
-        style="display:none;"
+        id="webAppBox"
+        class="webapp-box"
       >
 
-        DATA PESERTA
+        <div class="webapp-title">
+
+          PTBFR Participant System
+
+        </div>
+
+        <div
+          id="webAppStatus"
+          class="webapp-status"
+        >
+
+          Menunggu scan...
+
+        </div>
 
       </div>
 
 
-      <iframe
-        id="webAppFrame"
-        title="PTBFR Participant Data"
-        allow="camera"
-      >
-      </iframe>
-
-
       <!-- =================================================
-           MANUAL INPUT
+           MANUAL SEARCH
            ================================================= -->
 
       <div class="manual">
@@ -595,7 +600,9 @@ let scanLocked = false;
 
 let lastBib = "";
 
-let messageTimer = null;
+let webAppWindow = null;
+
+let messageInterval = null;
 
 
 // =====================================================
@@ -632,15 +639,15 @@ const qrBib =
   );
 
 
-const webAppFrame =
+const webAppBox =
   document.getElementById(
-    "webAppFrame"
+    "webAppBox"
   );
 
 
-const resultTitle =
+const webAppStatus =
   document.getElementById(
-    "resultTitle"
+    "webAppStatus"
   );
 
 
@@ -651,7 +658,7 @@ const manualBib =
 
 
 // =====================================================
-// SET STATUS
+// STATUS
 // =====================================================
 
 function setStatus(
@@ -685,7 +692,9 @@ function extractBib(
 
 
   if (!text) {
+
     return "";
+
   }
 
 
@@ -705,7 +714,7 @@ function extractBib(
 
 
   // ---------------------------------------------------
-  // URL
+  // URL ?bib=5001
   // ---------------------------------------------------
 
   try {
@@ -732,7 +741,7 @@ function extractBib(
 
   catch (error) {
 
-    // Not a URL
+    // bukan URL
 
   }
 
@@ -793,14 +802,105 @@ function extractBib(
 
 
 // =====================================================
+// OPEN WEB APP WINDOW
+// =====================================================
+
+function openWebAppWindow() {
+
+
+  // ---------------------------------------------------
+  // Jika window sudah ada dan masih terbuka
+  // ---------------------------------------------------
+
+  if (
+    webAppWindow &&
+    !webAppWindow.closed
+  ) {
+
+    try {
+
+      webAppWindow.focus();
+
+    }
+
+    catch (error) {
+
+      console.log(
+        "Focus error:",
+        error
+      );
+
+    }
+
+    return;
+
+  }
+
+
+  // ---------------------------------------------------
+  // BUKA WINDOW SAAT USER MENEKAN START CAMERA
+  // Ini penting supaya popup tidak diblokir browser.
+  // ---------------------------------------------------
+
+  try {
+
+    webAppWindow =
+      window.open(
+        WEB_APP_URL,
+        "PTBFRParticipantWindow"
+      );
+
+  }
+
+  catch (error) {
+
+    webAppWindow =
+      null;
+
+  }
+
+
+  if (
+    webAppWindow
+  ) {
+
+    webAppBox.style.display =
+      "block";
+
+
+    webAppStatus.textContent =
+      "Halaman sistem PTBFR sedang dibuka...";
+
+  }
+
+  else {
+
+    webAppBox.style.display =
+      "block";
+
+
+    webAppStatus.innerHTML =
+      "⚠️ Browser memblokir jendela sistem PTBFR. " +
+      "Izinkan popup untuk situs ini.";
+
+  }
+
+}
+
+
+// =====================================================
 // START CAMERA
 // =====================================================
 
 async function startCamera() {
 
 
-  if (cameraRunning) {
+  if (
+    cameraRunning
+  ) {
+
     return;
+
   }
 
 
@@ -808,15 +908,26 @@ async function startCamera() {
     false;
 
 
+  startButton.disabled =
+    true;
+
+
   setStatus(
-    "Meminta akses kamera...",
+    "Membuka sistem PTBFR dan meminta akses kamera...",
     "info"
   );
 
 
-  startButton.disabled =
-    true;
+  // ---------------------------------------------------
+  // BUKA WEB APP TERLEBIH DAHULU
+  // ---------------------------------------------------
 
+  openWebAppWindow();
+
+
+  // ---------------------------------------------------
+  // START QR SCANNER
+  // ---------------------------------------------------
 
   try {
 
@@ -844,9 +955,15 @@ async function startCamera() {
             ) * 0.70
           );
 
+
         return {
-          width: size,
-          height: size
+
+          width:
+            size,
+
+          height:
+            size
+
         };
 
       },
@@ -861,7 +978,8 @@ async function startCamera() {
     await html5QrCode.start(
 
       {
-        facingMode: "environment"
+        facingMode:
+          "environment"
       },
 
       config,
@@ -928,9 +1046,8 @@ function onScanFailure(
   errorMessage
 ) {
 
-  // Sengaja dikosongkan.
-  // Error scan per frame tidak perlu
-  // ditampilkan kepada user.
+  // Sengaja kosong.
+  // Tidak perlu menampilkan error setiap frame.
 
 }
 
@@ -945,8 +1062,12 @@ function onScanSuccess(
 ) {
 
 
-  if (scanLocked) {
+  if (
+    scanLocked
+  ) {
+
     return;
+
   }
 
 
@@ -958,10 +1079,12 @@ function onScanSuccess(
 
   if (!bib) {
 
+
     setStatus(
       "QR terbaca, tetapi nomor BIB tidak ditemukan.",
       "error"
     );
+
 
     return;
 
@@ -977,7 +1100,7 @@ function onScanSuccess(
 
 
   // ---------------------------------------------------
-  // DISPLAY QR RESULT
+  // DISPLAY BIB
   // ---------------------------------------------------
 
   qrBib.textContent =
@@ -988,88 +1111,31 @@ function onScanSuccess(
     "block";
 
 
-  // ---------------------------------------------------
-  // DISPLAY RESULT FRAME
-  // ---------------------------------------------------
-
-  resultTitle.style.display =
+  webAppBox.style.display =
     "block";
 
 
-  webAppFrame.style.display =
-    "block";
+  webAppStatus.innerHTML =
+    "Mengirim BIB <strong>" +
+    escapeHtml(
+      bib
+    ) +
+    "</strong> ke sistem PTBFR...";
 
-
-  // ---------------------------------------------------
-  // STATUS
-  // ---------------------------------------------------
 
   setStatus(
     "✓ QR TERBACA<br>" +
-    "Mencari peserta dengan BIB <strong>" +
-    escapeHtml(bib) +
-    "</strong>...",
+    "BIB <strong>" +
+    escapeHtml(
+      bib
+    ) +
+    "</strong>",
     "success"
   );
 
 
   // ---------------------------------------------------
-  // OPEN WEB APP
-  // ---------------------------------------------------
-
-  loadParticipantPage(
-    bib
-  );
-
-}
-
-
-// =====================================================
-// LOAD PARTICIPANT PAGE
-// =====================================================
-
-function loadParticipantPage(
-  bib
-) {
-
-
-  // ---------------------------------------------------
-  // Jika iframe belum memiliki source,
-  // buka Web App terlebih dahulu.
-  // ---------------------------------------------------
-
-  const currentSource =
-    webAppFrame.getAttribute(
-      "src"
-    );
-
-
-  if (
-    !currentSource
-  ) {
-
-    webAppFrame.src =
-      WEB_APP_URL;
-
-
-    webAppFrame.onload =
-      function() {
-
-        sendBibToWebApp(
-          bib
-        );
-
-      };
-
-
-    return;
-
-  }
-
-
-  // ---------------------------------------------------
-  // Jika sudah terbuka,
-  // langsung kirim BIB.
+  // KIRIM KE APPS SCRIPT
   // ---------------------------------------------------
 
   sendBibToWebApp(
@@ -1080,7 +1146,7 @@ function loadParticipantPage(
 
 
 // =====================================================
-// SEND BIB TO WEB APP
+// SEND BIB TO WEB APP WINDOW
 // =====================================================
 
 function sendBibToWebApp(
@@ -1088,117 +1154,192 @@ function sendBibToWebApp(
 ) {
 
 
-  setStatus(
-    "Mengirim BIB <strong>" +
-    escapeHtml(bib) +
-    "</strong> ke sistem PTBFR...",
-    "info"
-  );
+  // ---------------------------------------------------
+  // PASTIKAN WINDOW TERBUKA
+  // ---------------------------------------------------
+
+  if (
+    !webAppWindow ||
+    webAppWindow.closed
+  ) {
 
 
-  try {
-
-    webAppFrame.contentWindow.postMessage(
-
-      {
-        type:
-          "PTBFR_BIB_SCAN",
-
-        bib:
-          bib
-
-      },
-
-      "*"
-
-    );
+    openWebAppWindow();
 
 
-    // -------------------------------------------------
-    // Kirim beberapa kali untuk memastikan pesan
-    // diterima setelah halaman selesai loading.
-    // -------------------------------------------------
+    if (
+      !webAppWindow ||
+      webAppWindow.closed
+    ) {
 
-    let count =
-      0;
-
-
-    const interval =
-      setInterval(
-        function() {
-
-
-          count++;
-
-
-          try {
-
-            webAppFrame.contentWindow.postMessage(
-
-              {
-                type:
-                  "PTBFR_BIB_SCAN",
-
-                bib:
-                  bib
-
-              },
-
-              "*"
-
-            );
-
-          }
-
-          catch (error) {
-
-            console.error(
-              error
-            );
-
-          }
-
-
-          if (
-            count >= 5
-          ) {
-
-            clearInterval(
-              interval
-            );
-
-          }
-
-        },
-
-        700
+      setStatus(
+        "⚠️ Sistem PTBFR tidak terbuka. Izinkan popup browser lalu coba lagi.",
+        "error"
       );
 
 
-    setStatus(
-      "✓ BIB <strong>" +
-      escapeHtml(bib) +
-      "</strong> dikirim. Menunggu data peserta...",
-      "success"
+      scanLocked =
+        false;
+
+
+      return;
+
+    }
+
+  }
+
+
+  webAppStatus.innerHTML =
+    "Mengirim BIB <strong>" +
+    escapeHtml(
+      bib
+    ) +
+    "</strong>...";
+
+
+  // ---------------------------------------------------
+  // KIRIM BERULANG
+  //
+  // Halaman Apps Script membutuhkan waktu untuk
+  // selesai loading. Karena itu BIB dikirim beberapa
+  // kali.
+  // ---------------------------------------------------
+
+  if (
+    messageInterval
+  ) {
+
+    clearInterval(
+      messageInterval
     );
 
   }
 
 
-  catch (error) {
-
-    console.error(
-      "postMessage error:",
-      error
-    );
+  let count =
+    0;
 
 
-    setStatus(
-      "Gagal mengirim BIB ke sistem.",
-      "error"
-    );
+  function sendMessage() {
+
+
+    if (
+      !webAppWindow ||
+      webAppWindow.closed
+    ) {
+
+      clearInterval(
+        messageInterval
+      );
+
+
+      messageInterval =
+        null;
+
+
+      setStatus(
+        "Jendela sistem PTBFR ditutup.",
+        "error"
+      );
+
+
+      return;
+
+    }
+
+
+    try {
+
+
+      webAppWindow.postMessage(
+
+        {
+
+          type:
+            "PTBFR_BIB_SCAN",
+
+          bib:
+            bib
+
+        },
+
+        "*"
+
+      );
+
+
+      count++;
+
+
+      webAppStatus.innerHTML =
+        "✓ BIB <strong>" +
+        escapeHtml(
+          bib
+        ) +
+        "</strong> dikirim ke sistem PTBFR.";
+
+
+      setStatus(
+        "✓ BIB " +
+        escapeHtml(
+          bib
+        ) +
+        " dikirim.<br>" +
+        "Data peserta sedang dibuka...",
+        "success"
+      );
+
+
+      // -------------------------------------------------
+      // KIRIM 8 KALI
+      // -------------------------------------------------
+
+      if (
+        count >= 8
+      ) {
+
+        clearInterval(
+          messageInterval
+        );
+
+
+        messageInterval =
+          null;
+
+      }
+
+    }
+
+
+    catch (error) {
+
+
+      console.error(
+        "postMessage error:",
+        error
+      );
+
+    }
 
   }
+
+
+  // ---------------------------------------------------
+  // KIRIM PERTAMA
+  // ---------------------------------------------------
+
+  sendMessage();
+
+
+  // ---------------------------------------------------
+  // ULANG SETIAP 700ms
+  // ---------------------------------------------------
+
+  messageInterval =
+    setInterval(
+      sendMessage,
+      700
+    );
 
 }
 
@@ -1224,10 +1365,12 @@ function manualSearch() {
 
   if (!bib) {
 
+
     setStatus(
       "Masukkan nomor BIB terlebih dahulu.",
       "error"
     );
+
 
     return;
 
@@ -1250,15 +1393,22 @@ function manualSearch() {
     "block";
 
 
-  resultTitle.style.display =
+  webAppBox.style.display =
     "block";
 
 
-  webAppFrame.style.display =
-    "block";
+  // ---------------------------------------------------
+  // BUKA APPS SCRIPT
+  // ---------------------------------------------------
+
+  openWebAppWindow();
 
 
-  loadParticipantPage(
+  // ---------------------------------------------------
+  // KIRIM BIB
+  // ---------------------------------------------------
+
+  sendBibToWebApp(
     bib
   );
 
@@ -1266,7 +1416,7 @@ function manualSearch() {
 
 
 // =====================================================
-// RESET SCANNER
+// RESET
 // =====================================================
 
 function resetScanner() {
@@ -1278,6 +1428,21 @@ function resetScanner() {
 
   lastBib =
     "";
+
+
+  if (
+    messageInterval
+  ) {
+
+    clearInterval(
+      messageInterval
+    );
+
+
+    messageInterval =
+      null;
+
+  }
 
 
   manualBib.value =
@@ -1292,43 +1457,39 @@ function resetScanner() {
     "none";
 
 
-  resultTitle.style.display =
+  webAppBox.style.display =
     "none";
-
-
-  // ---------------------------------------------------
-  // Jangan reload iframe.
-  // Kita cukup kirim reset dengan cara
-  // membuka ulang halaman Apps Script.
-  // ---------------------------------------------------
-
-  webAppFrame.style.display =
-    "none";
-
-
-  webAppFrame.onload =
-    null;
-
-
-  webAppFrame.removeAttribute(
-    "src"
-  );
 
 
   setStatus(
-    "Tekan <strong>START CAMERA</strong> untuk scan QR peserta berikutnya.",
-    "info"
+    "📷 Kamera aktif. Arahkan ke QR peserta berikutnya.",
+    "success"
   );
 
 
+  // ---------------------------------------------------
+  // Jangan tutup window Apps Script.
+  // Window akan dipakai lagi untuk peserta berikutnya.
+  // ---------------------------------------------------
+
   if (
-    cameraRunning
+    webAppWindow &&
+    !webAppWindow.closed
   ) {
 
-    setStatus(
-      "📷 Kamera aktif. Arahkan ke QR peserta berikutnya.",
-      "success"
-    );
+    try {
+
+      webAppWindow.focus();
+
+    }
+
+    catch (error) {
+
+      console.log(
+        error
+      );
+
+    }
 
   }
 
@@ -1417,29 +1578,6 @@ async function stopCamera() {
 
 
 // =====================================================
-// IFRAME LOAD EVENT
-// =====================================================
-
-webAppFrame.addEventListener(
-  "load",
-  function() {
-
-
-    if (
-      lastBib
-    ) {
-
-      sendBibToWebApp(
-        lastBib
-      );
-
-    }
-
-  }
-);
-
-
-// =====================================================
 // ESCAPE HTML
 // =====================================================
 
@@ -1489,6 +1627,7 @@ function escapeHtml(
 manualBib.addEventListener(
   "keydown",
   function(event) {
+
 
     if (
       event.key ===
