@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
 
@@ -10,12 +10,11 @@
   content="width=device-width, initial-scale=1.0, viewport-fit=cover"
 >
 
-<title>PTBFR 2026 – Race Pack Scanner</title>
+<title>PTBFR 2026 - Race Pack Scanner</title>
 
 <script
   src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
 </script>
-
 
 <style>
 
@@ -23,12 +22,13 @@
   box-sizing: border-box;
 }
 
-
 html,
 body {
 
   margin: 0;
   padding: 0;
+
+  min-height: 100%;
 
   background: #f4f6f7;
 
@@ -41,13 +41,9 @@ body {
 
 }
 
-
 body {
-
   min-height: 100vh;
-
 }
-
 
 .wrap {
 
@@ -61,7 +57,6 @@ body {
     40px;
 
 }
-
 
 .header {
 
@@ -79,7 +74,6 @@ body {
 
 }
 
-
 .header h1 {
 
   margin:
@@ -89,7 +83,6 @@ body {
 
 }
 
-
 .header p {
 
   margin: 0;
@@ -97,7 +90,6 @@ body {
   font-size: 17px;
 
 }
-
 
 .card {
 
@@ -118,7 +110,6 @@ body {
     );
 
 }
-
 
 button {
 
@@ -144,13 +135,11 @@ button {
 
 }
 
-
 button.secondary {
 
   background: #666;
 
 }
-
 
 button:disabled {
 
@@ -159,7 +148,6 @@ button:disabled {
   cursor: not-allowed;
 
 }
-
 
 #reader {
 
@@ -173,10 +161,7 @@ button:disabled {
 
   background: #111;
 
-  min-height: 80px;
-
 }
-
 
 #reader video {
 
@@ -186,6 +171,17 @@ button:disabled {
 
 }
 
+#reader__dashboard_section_csr {
+
+  padding: 10px !important;
+
+}
+
+#reader__dashboard_section_swaplink {
+
+  color: #238da1 !important;
+
+}
 
 #status {
 
@@ -205,7 +201,6 @@ button:disabled {
 
 }
 
-
 .success {
 
   background:
@@ -215,7 +210,6 @@ button:disabled {
     #1f6b32;
 
 }
-
 
 .error {
 
@@ -227,7 +221,6 @@ button:disabled {
 
 }
 
-
 .warning {
 
   background:
@@ -237,7 +230,6 @@ button:disabled {
     #7a5600;
 
 }
-
 
 .small {
 
@@ -252,7 +244,6 @@ button:disabled {
   text-align: center;
 
 }
-
 
 #resultFrame {
 
@@ -272,13 +263,11 @@ button:disabled {
 
 }
 
-
 .hidden {
 
   display: none !important;
 
 }
-
 
 .bibBox {
 
@@ -291,7 +280,6 @@ button:disabled {
   font-weight: 700;
 
 }
-
 
 .bibBox span {
 
@@ -309,7 +297,6 @@ button:disabled {
     #238da1;
 
 }
-
 
 .loading {
 
@@ -340,7 +327,6 @@ button:disabled {
 
 }
 
-
 @keyframes spin {
 
   to {
@@ -352,11 +338,9 @@ button:disabled {
 
 }
 
-
 </style>
 
 </head>
-
 
 <body>
 
@@ -503,9 +487,9 @@ button:disabled {
 
       <br><br>
 
-      Scanner akan membaca nomor BIB
-      lalu membuka data peserta
-      secara otomatis.
+      Scanner membaca nomor BIB
+      dan mengirimkannya ke sistem
+      Race Pack Collection.
 
     </div>
 
@@ -537,42 +521,35 @@ const startBtn =
     "startBtn"
   );
 
-
 const stopBtn =
   document.getElementById(
     "stopBtn"
   );
-
 
 const newScanBtn =
   document.getElementById(
     "newScanBtn"
   );
 
-
 const reader =
   document.getElementById(
     "reader"
   );
-
 
 const statusBox =
   document.getElementById(
     "status"
   );
 
-
 const resultFrame =
   document.getElementById(
     "resultFrame"
   );
 
-
 const scannedBib =
   document.getElementById(
     "scannedBib"
   );
-
 
 const bibValue =
   document.getElementById(
@@ -624,31 +601,31 @@ function setStatus(
 
 async function startScanner() {
 
+
   if (scanning) {
-
     return;
-
   }
 
 
   if (scanLocked) {
-
     return;
-
   }
 
 
   // -------------------------------------------------
-  // CHECK HTTPS
+  // HTTPS CHECK
   // -------------------------------------------------
 
-  if (!window.isSecureContext) {
+  if (
+    window.location.protocol !==
+    "https:"
+  ) {
 
     setStatus(
 
-      "❌ Kamera membutuhkan HTTPS." +
+      "❌ Scanner harus dibuka melalui HTTPS." +
       "<br><br>" +
-      "Buka scanner melalui GitHub Pages.",
+      "Gunakan alamat GitHub Pages PTBFR.",
 
       "error"
 
@@ -659,7 +636,8 @@ async function startScanner() {
   }
 
 
-  startBtn.disabled = true;
+  startBtn.disabled =
+    true;
 
 
   stopBtn.classList.remove(
@@ -693,7 +671,7 @@ async function startScanner() {
 
 
     // -------------------------------------------------
-    // GET CAMERAS
+    // GET AVAILABLE CAMERAS
     // -------------------------------------------------
 
     const cameras =
@@ -713,7 +691,7 @@ async function startScanner() {
 
 
     // -------------------------------------------------
-    // FIND BACK CAMERA
+    // SELECT BACK CAMERA
     // -------------------------------------------------
 
     let cameraId =
@@ -768,17 +746,16 @@ async function startScanner() {
 
       function(errorMessage) {
 
-        // QR belum terbaca.
-        // Tidak perlu menampilkan error
-        // karena callback ini berjalan
-        // terus-menerus.
+        // Ignore scanning errors.
+        // Scanner terus mencoba membaca QR.
 
       }
 
     );
 
 
-    scanning = true;
+    scanning =
+      true;
 
 
     setStatus(
@@ -827,20 +804,32 @@ async function startScanner() {
     }
 
 
-    // -------------------------------------------------
-    // SPECIAL CAMERA MESSAGES
-    // -------------------------------------------------
+    const lowerMessage =
+      String(
+        message
+      ).toLowerCase();
+
 
     if (
-      String(message)
-        .toLowerCase()
-        .includes("permission")
+      lowerMessage.includes(
+        "permission"
+      ) ||
+      lowerMessage.includes(
+        "notallowed"
+      ) ||
+      lowerMessage.includes(
+        "denied"
+      )
     ) {
 
       message =
         "Izin kamera ditolak." +
         "<br><br>" +
-        "Silakan buka Settings → Safari → Camera → Allow.";
+        "Di iPhone/iPad buka:" +
+        "<br>" +
+        "Settings → Safari → Camera → Allow" +
+        "<br><br>" +
+        "Kemudian reload halaman scanner.";
 
     }
 
@@ -954,7 +943,7 @@ async function stopScanner() {
 
 
 // =====================================================
-// QR SUCCESS
+// QR SCAN SUCCESS
 // =====================================================
 
 async function onScanSuccess(
@@ -1001,7 +990,7 @@ async function onScanSuccess(
 
       "❌ QR tidak berisi nomor BIB yang valid." +
       "<br><br>" +
-      "Contoh isi QR yang benar:" +
+      "Isi QR harus seperti:" +
       "<br>" +
       "<b>5001</b>",
 
@@ -1093,12 +1082,8 @@ function extractBib(
 
 
   // =================================================
-  // PRIMARY FORMAT
-  // =================================================
-  // QR berisi:
-  //
-  // 5001
-  //
+  // FORMAT 1
+  // QR BERISI BIB LANGSUNG
   // =================================================
 
   if (
@@ -1113,12 +1098,8 @@ function extractBib(
 
 
   // =================================================
-  // BACKUP FORMAT
-  // =================================================
-  // QR lama berupa URL:
-  //
-  // ...?bib=5001
-  //
+  // FORMAT 2
+  // URL ?bib=5001
   // =================================================
 
   try {
@@ -1149,7 +1130,7 @@ function extractBib(
 
 
     // -----------------------------------------------
-    // CODE PARAMETER
+    // ?code=...
     // -----------------------------------------------
 
     const codeParam =
@@ -1161,33 +1142,32 @@ function extractBib(
     if (codeParam) {
 
 
-      const match =
+      const codeMatch =
         codeParam.match(
           /(\d+)$/
         );
 
 
-      if (match) {
+      if (codeMatch) {
 
-        return match[1];
+        return codeMatch[1];
 
       }
 
     }
 
+
   }
   catch (error) {
 
     // Bukan URL.
-    // Lanjut ke pemeriksaan berikutnya.
 
   }
 
 
   // =================================================
-  // BACKUP FORMAT
-  // =================================================
-  // Cari angka di akhir teks
+  // FORMAT 3
+  // TEXT YANG BERAKHIR DENGAN ANGKA
   // =================================================
 
   const match =
@@ -1209,7 +1189,7 @@ function extractBib(
 
 
 // =====================================================
-// OPEN PARTICIPANT PAGE
+// OPEN PARTICIPANT
 // =====================================================
 
 function openParticipantPage(
@@ -1218,7 +1198,7 @@ function openParticipantPage(
 
 
   // -------------------------------------------------
-  // SHOW FRAME
+  // SHOW RESULT FRAME
   // -------------------------------------------------
 
   resultFrame.style.display =
@@ -1226,7 +1206,7 @@ function openParticipantPage(
 
 
   // -------------------------------------------------
-  // RESET FRAME
+  // CLEAR OLD FRAME
   // -------------------------------------------------
 
   resultFrame.src =
@@ -1234,7 +1214,7 @@ function openParticipantPage(
 
 
   // -------------------------------------------------
-  // WAIT FOR BLANK FRAME
+  // SUBMIT AFTER SHORT DELAY
   // -------------------------------------------------
 
   setTimeout(
@@ -1245,12 +1225,12 @@ function openParticipantPage(
       );
 
     },
-    150
+    200
   );
 
 
   // -------------------------------------------------
-  // SHOW NEW SCAN
+  // SHOW NEW SCAN BUTTON
   // -------------------------------------------------
 
   newScanBtn.classList.remove(
@@ -1261,7 +1241,7 @@ function openParticipantPage(
 
 
 // =====================================================
-// SEND BIB TO APPS SCRIPT USING POST
+// POST BIB TO APPS SCRIPT
 // =====================================================
 
 function submitBibToAppsScript(
@@ -1296,7 +1276,7 @@ function submitBibToAppsScript(
 
 
   // -------------------------------------------------
-  // CREATE BIB INPUT
+  // BIB FIELD
   // -------------------------------------------------
 
   const input =
@@ -1325,7 +1305,7 @@ function submitBibToAppsScript(
 
 
   // -------------------------------------------------
-  // ADD FORM TO PAGE
+  // ADD FORM
   // -------------------------------------------------
 
   document.body.appendChild(
@@ -1334,7 +1314,7 @@ function submitBibToAppsScript(
 
 
   // -------------------------------------------------
-  // SUBMIT
+  // STATUS
   // -------------------------------------------------
 
   setStatus(
@@ -1352,11 +1332,15 @@ function submitBibToAppsScript(
   );
 
 
+  // -------------------------------------------------
+  // SUBMIT
+  // -------------------------------------------------
+
   form.submit();
 
 
   // -------------------------------------------------
-  // REMOVE FORM
+  // CLEAN FORM
   // -------------------------------------------------
 
   setTimeout(
@@ -1384,7 +1368,7 @@ async function newScan() {
 
 
   // -------------------------------------------------
-  // STOP ANY CAMERA
+  // STOP CAMERA
   // -------------------------------------------------
 
   await stopScanner();
@@ -1397,13 +1381,12 @@ async function newScan() {
   scanLocked =
     false;
 
-
   currentBib =
     "";
 
 
   // -------------------------------------------------
-  // RESET DISPLAY
+  // RESET BIB
   // -------------------------------------------------
 
   bibValue.textContent =
@@ -1416,7 +1399,7 @@ async function newScan() {
 
 
   // -------------------------------------------------
-  // HIDE RESULT
+  // RESET RESULT FRAME
   // -------------------------------------------------
 
   resultFrame.src =
@@ -1428,7 +1411,7 @@ async function newScan() {
 
 
   // -------------------------------------------------
-  // BUTTONS
+  // RESET BUTTONS
   // -------------------------------------------------
 
   newScanBtn.classList.add(
@@ -1446,7 +1429,7 @@ async function newScan() {
 
 
   // -------------------------------------------------
-  // STATUS
+  // RESET STATUS
   // -------------------------------------------------
 
   setStatus(
@@ -1549,45 +1532,6 @@ newScanBtn.addEventListener(
 
 
 // =====================================================
-// FRAME LOAD EVENT
-// =====================================================
-
-resultFrame.addEventListener(
-
-  "load",
-
-  function() {
-
-
-    if (
-      resultFrame.src &&
-      resultFrame.src !==
-      "about:blank"
-    ) {
-
-
-      setStatus(
-
-        "✅ <b>BIB " +
-        escapeHtml(
-          currentBib
-        ) +
-        "</b> telah dikirim." +
-        "<br><br>" +
-        "Data peserta sedang ditampilkan.",
-
-        "success"
-
-      );
-
-    }
-
-  }
-
-);
-
-
-// =====================================================
 // PAGE LOAD
 // =====================================================
 
@@ -1596,7 +1540,6 @@ window.addEventListener(
   "load",
 
   function() {
-
 
     setStatus(
 
@@ -1641,7 +1584,6 @@ window.addEventListener(
 
 
 </script>
-
 
 </body>
 
