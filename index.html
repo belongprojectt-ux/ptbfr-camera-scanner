@@ -3,502 +3,573 @@
 
 <head>
 
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<title>PTBFR 2026 - Race Pack Scanner</title>
+  <title>
+    PTBFR 2026 - Race Pack Collection Scanner
+  </title>
 
-<script
-  src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
-</script>
 
-<style>
+  <!-- =================================================
+       QR SCANNER LIBRARY
+       ================================================= -->
 
-* {
-  box-sizing: border-box;
-}
+  <script
+    src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
+  </script>
 
-html,
-body {
 
-  margin: 0;
-  padding: 0;
+  <style>
 
-  min-height: 100%;
+    * {
+      box-sizing: border-box;
+    }
 
-  background: #f4f6f7;
 
-  color: #333;
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #f3f5f6;
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+      color: #333;
+    }
 
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
 
-}
+    .container {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
 
-body {
-  min-height: 100vh;
-}
 
-.wrap {
+    /* =================================================
+       MAIN CARD
+       ================================================= */
 
-  width: min(
-    620px,
-    94vw
-  );
+    .card {
+      background: #fff;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow:
+        0 5px 25px rgba(0,0,0,.08);
+    }
 
-  margin:
-    20px auto
-    40px;
 
-}
+    /* =================================================
+       HEADER
+       ================================================= */
 
-.header {
+    .header {
+      background: #16849c;
+      color: #fff;
+      text-align: center;
+      padding: 30px 20px;
+    }
 
-  background: #238da1;
 
-  color: #fff;
+    .header h1 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 700;
+    }
 
-  border-radius:
-    20px 20px 0 0;
 
-  padding:
-    28px 20px;
+    .header p {
+      margin: 8px 0 0;
+      font-size: 19px;
+    }
 
-  text-align: center;
 
-}
+    /* =================================================
+       CONTENT
+       ================================================= */
 
-.header h1 {
+    .content {
+      padding: 25px;
+    }
 
-  margin:
-    0 0 6px;
 
-  font-size: 30px;
+    /* =================================================
+       START CAMERA BUTTON
+       ================================================= */
 
-}
+    .button {
+      width: 100%;
+      min-height: 58px;
+      border: none;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
-.header p {
+
+    .button-start {
+      background: #16849c;
+      color: #fff;
+    }
 
-  margin: 0;
 
-  font-size: 17px;
+    .button-stop {
+      background: #a33;
+      color: #fff;
+      margin-top: 12px;
+      display: none;
+    }
+
+
+    .button-reset {
+      background: #777;
+      color: #fff;
+      margin-top: 15px;
+    }
+
+
+    .button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
 
-}
 
-.card {
+    /* =================================================
+       CAMERA
+       ================================================= */
 
-  background: #fff;
+    #reader {
+      width: 100%;
+      margin-top: 20px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #111;
+      min-height: 50px;
+    }
+
+
+    /* =================================================
+       STATUS
+       ================================================= */
 
-  padding: 20px;
+    .status {
+      margin-top: 18px;
+      padding: 17px;
+      border-radius: 14px;
+      text-align: center;
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
 
-  border-radius:
-    0 0 20px 20px;
+
+    .status-info {
+      background: #eef6f8;
+      color: #176c7e;
+    }
+
+
+    .status-success {
+      background: #d9f5e7;
+      color: #08783f;
+    }
+
+
+    .status-error {
+      background: #ffe2e2;
+      color: #a00000;
+    }
+
+
+    /* =================================================
+       QR RESULT
+       ================================================= */
+
+    #qrResult {
+      display: none;
+      margin-top: 18px;
+      background: #eef6f8;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+    }
+
+
+    .qr-title {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 6px;
+    }
+
+
+    .qr-bib {
+      font-size: 45px;
+      font-weight: 700;
+      color: #16849c;
+    }
+
+
+    /* =================================================
+       PARTICIPANT AREA
+       ================================================= */
 
-  box-shadow:
-    0 4px 18px
-    rgba(
-      0,
-      0,
-      0,
-      0.08
-    );
+    .result-title {
+      margin-top: 28px;
+      margin-bottom: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #555;
+    }
 
-}
 
-button {
+    #webAppFrame {
+      display: none;
+      width: 100%;
+      height: 760px;
+      border: 2px solid #ddd;
+      border-radius: 18px;
+      background: #fff;
+    }
 
-  width: 100%;
 
-  border: 0;
+    /* =================================================
+       MANUAL BIB
+       ================================================= */
 
-  border-radius: 12px;
+    .manual {
+      margin-top: 25px;
+      padding-top: 22px;
+      border-top: 1px solid #ddd;
+    }
 
-  padding: 15px;
 
-  font-size: 17px;
+    .manual-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #555;
+    }
 
-  font-weight: 700;
 
-  cursor: pointer;
+    .manual-row {
+      display: flex;
+      gap: 10px;
+    }
 
-  background: #238da1;
 
-  color: #fff;
+    .manual-input {
+      flex: 1;
+      min-width: 0;
+      height: 54px;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      padding: 0 15px;
+      font-size: 18px;
+      text-align: center;
+      outline: none;
+    }
 
-  margin-top: 10px;
 
-}
+    .manual-input:focus {
+      border-color: #16849c;
+    }
 
-button.secondary {
 
-  background: #666;
+    .manual-button {
+      width: 130px;
+      height: 54px;
+      border: none;
+      border-radius: 12px;
+      background: #16849c;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
-}
 
-button:disabled {
+    /* =================================================
+       INSTRUCTIONS
+       ================================================= */
 
-  opacity: 0.55;
+    .instructions {
+      margin-top: 20px;
+      text-align: center;
+      color: #666;
+      font-size: 15px;
+      line-height: 1.6;
+    }
 
-  cursor: not-allowed;
 
-}
+    .instructions strong {
+      color: #333;
+    }
 
-#reader {
 
-  width: 100%;
+    /* =================================================
+       MOBILE
+       ================================================= */
 
-  margin-top: 16px;
+    @media (max-width: 600px) {
 
-  border-radius: 14px;
+      body {
+        padding: 10px;
+      }
 
-  overflow: hidden;
 
-  background: #111;
+      .content {
+        padding: 17px;
+      }
 
-}
 
-#reader video {
+      .header {
+        padding: 25px 15px;
+      }
 
-  width: 100% !important;
 
-  height: auto !important;
+      .header h1 {
+        font-size: 27px;
+      }
 
-}
 
-#reader__dashboard_section_csr {
+      .header p {
+        font-size: 17px;
+      }
 
-  padding: 10px !important;
 
-}
+      .manual-row {
+        display: block;
+      }
 
-#reader__dashboard_section_swaplink {
 
-  color: #238da1 !important;
+      .manual-input {
+        width: 100%;
+      }
 
-}
 
-#status {
+      .manual-button {
+        width: 100%;
+        margin-top: 10px;
+      }
 
-  margin-top: 14px;
 
-  padding: 13px;
+      #webAppFrame {
+        height: 700px;
+      }
 
-  border-radius: 12px;
+    }
 
-  background: #eef6f8;
-
-  line-height: 1.5;
-
-  font-size: 15px;
-
-  text-align: center;
-
-}
-
-.success {
-
-  background:
-    #eaf7ed !important;
-
-  color:
-    #1f6b32;
-
-}
-
-.error {
-
-  background:
-    #fff0f0 !important;
-
-  color:
-    #9b2226;
-
-}
-
-.warning {
-
-  background:
-    #fff8e6 !important;
-
-  color:
-    #7a5600;
-
-}
-
-.small {
-
-  color: #666;
-
-  font-size: 13px;
-
-  line-height: 1.5;
-
-  margin-top: 14px;
-
-  text-align: center;
-
-}
-
-#resultFrame {
-
-  width: 100%;
-
-  height: 900px;
-
-  border: 0;
-
-  border-radius: 14px;
-
-  background: #fff;
-
-  margin-top: 16px;
-
-  display: none;
-
-}
-
-.hidden {
-
-  display: none !important;
-
-}
-
-.bibBox {
-
-  margin-top: 14px;
-
-  text-align: center;
-
-  font-size: 22px;
-
-  font-weight: 700;
-
-}
-
-.bibBox span {
-
-  display: inline-block;
-
-  background:
-    #eef6f8;
-
-  padding:
-    8px 18px;
-
-  border-radius: 10px;
-
-  color:
-    #238da1;
-
-}
-
-.loading {
-
-  display: inline-block;
-
-  width: 18px;
-
-  height: 18px;
-
-  border:
-    3px solid
-    rgba(
-      35,
-      141,
-      161,
-      0.25
-    );
-
-  border-top-color:
-    #238da1;
-
-  border-radius: 50%;
-
-  animation:
-    spin 0.8s linear infinite;
-
-  vertical-align: middle;
-
-}
-
-@keyframes spin {
-
-  to {
-
-    transform:
-      rotate(360deg);
-
-  }
-
-}
-
-</style>
+  </style>
 
 </head>
+
 
 <body>
 
 
-<div class="wrap">
-
-
-  <!-- =========================================
-       HEADER
-       ========================================= -->
-
-  <div class="header">
-
-    <h1>
-      PTBFR 2026
-    </h1>
-
-    <p>
-      Race Pack Collection Scanner
-    </p>
-
-  </div>
+<div class="container">
 
 
   <div class="card">
 
 
-    <!-- =========================================
-         START CAMERA
-         ========================================= -->
+    <!-- =================================================
+         HEADER
+         ================================================= -->
 
-    <button
-      id="startBtn"
-      type="button"
-    >
+    <div class="header">
 
-      📷 START CAMERA &amp; SCAN QR
+      <h1>
+        PTBFR 2026
+      </h1>
 
-    </button>
-
-
-    <!-- =========================================
-         STOP CAMERA
-         ========================================= -->
-
-    <button
-      id="stopBtn"
-      type="button"
-      class="secondary hidden"
-    >
-
-      ⏹ STOP CAMERA
-
-    </button>
-
-
-    <!-- =========================================
-         QR READER
-         ========================================= -->
-
-    <div
-      id="reader">
-    </div>
-
-
-    <!-- =========================================
-         STATUS
-         ========================================= -->
-
-    <div
-      id="status"
-    >
-
-      Tekan
-      <b>START CAMERA</b>
-      untuk mulai scan QR peserta.
+      <p>
+        Race Pack Collection Scanner
+      </p>
 
     </div>
 
 
-    <!-- =========================================
-         SCANNED BIB
-         ========================================= -->
+    <div class="content">
 
-    <div
-      id="scannedBib"
-      class="bibBox hidden"
-    >
 
-      BIB:
+      <!-- =================================================
+           START CAMERA
+           ================================================= -->
 
-      <span
-        id="bibValue">
-      </span>
+      <button
+        id="startButton"
+        class="button button-start"
+        onclick="startCamera()"
+      >
+
+        📷 START CAMERA &amp; SCAN QR
+
+      </button>
+
+
+      <button
+        id="stopButton"
+        class="button button-stop"
+        onclick="stopCamera()"
+      >
+
+        ✕ STOP CAMERA
+
+      </button>
+
+
+      <!-- =================================================
+           CAMERA AREA
+           ================================================= -->
+
+      <div id="reader"></div>
+
+
+      <!-- =================================================
+           STATUS
+           ================================================= -->
+
+      <div
+        id="status"
+        class="status status-info"
+      >
+
+        Tekan <strong>START CAMERA</strong>
+        untuk mulai scan QR peserta.
+
+      </div>
+
+
+      <!-- =================================================
+           QR RESULT
+           ================================================= -->
+
+      <div id="qrResult">
+
+        <div class="qr-title">
+          QR TERBACA
+        </div>
+
+        <div
+          id="qrBib"
+          class="qr-bib"
+        >
+          -
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           WEB APP RESULT
+           ================================================= -->
+
+      <div
+        id="resultTitle"
+        class="result-title"
+        style="display:none;"
+      >
+
+        DATA PESERTA
+
+      </div>
+
+
+      <iframe
+        id="webAppFrame"
+        title="PTBFR Participant Data"
+        allow="camera"
+      >
+      </iframe>
+
+
+      <!-- =================================================
+           MANUAL INPUT
+           ================================================= -->
+
+      <div class="manual">
+
+        <div class="manual-title">
+
+          Manual Search BIB
+
+        </div>
+
+
+        <div class="manual-row">
+
+          <input
+            id="manualBib"
+            class="manual-input"
+            type="text"
+            inputmode="numeric"
+            autocomplete="off"
+            placeholder="Contoh: 5001"
+          >
+
+
+          <button
+            class="manual-button"
+            onclick="manualSearch()"
+          >
+
+            SEARCH
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           RESET
+           ================================================= -->
+
+      <button
+        class="button button-reset"
+        onclick="resetScanner()"
+      >
+
+        ↻ RESET / SCAN NEXT
+
+      </button>
+
+
+      <!-- =================================================
+           INSTRUCTIONS
+           ================================================= -->
+
+      <div class="instructions">
+
+        QR Code peserta harus berisi
+        <strong>nomor BIB saja</strong>.
+
+        <br>
+
+        Contoh:
+        <strong>5001</strong>
+
+        <br><br>
+
+        Scanner akan membaca nomor BIB,
+        lalu membuka data peserta secara otomatis.
+
+      </div>
+
 
     </div>
-
-
-    <!-- =========================================
-         APPS SCRIPT RESULT
-         ========================================= -->
-
-    <iframe
-      id="resultFrame"
-      name="ptbfrResultFrame"
-      title="PTBFR Race Pack Collection"
-      allow="camera"
-      referrerpolicy="no-referrer"
-    >
-    </iframe>
-
-
-    <!-- =========================================
-         NEW SCAN
-         ========================================= -->
-
-    <button
-      id="newScanBtn"
-      type="button"
-      class="secondary hidden"
-    >
-
-      📷 SCAN PESERTA BERIKUTNYA
-
-    </button>
-
-
-    <!-- =========================================
-         INFORMATION
-         ========================================= -->
-
-    <div
-      class="small"
-    >
-
-      QR Code peserta harus berisi
-      <b>nomor BIB saja</b>.
-
-      <br>
-
-      Contoh:
-
-      <b>5001</b>
-
-      <br><br>
-
-      Scanner membaca nomor BIB
-      dan mengirimkannya ke sistem
-      Race Pack Collection.
-
-    </div>
-
 
   </div>
 
-
 </div>
-
 
 
 <script>
@@ -513,547 +584,88 @@ const WEB_APP_URL =
 
 
 // =====================================================
-// ELEMENTS
+// GLOBAL VARIABLES
 // =====================================================
 
-const startBtn =
-  document.getElementById(
-    "startBtn"
-  );
+let html5QrCode = null;
 
-const stopBtn =
-  document.getElementById(
-    "stopBtn"
-  );
+let cameraRunning = false;
 
-const newScanBtn =
-  document.getElementById(
-    "newScanBtn"
-  );
+let scanLocked = false;
 
-const reader =
-  document.getElementById(
-    "reader"
-  );
+let lastBib = "";
 
-const statusBox =
+let messageTimer = null;
+
+
+// =====================================================
+// DOM ELEMENTS
+// =====================================================
+
+const statusElement =
   document.getElementById(
     "status"
   );
 
-const resultFrame =
+
+const startButton =
   document.getElementById(
-    "resultFrame"
+    "startButton"
   );
 
-const scannedBib =
+
+const stopButton =
   document.getElementById(
-    "scannedBib"
+    "stopButton"
   );
 
-const bibValue =
+
+const qrResult =
   document.getElementById(
-    "bibValue"
+    "qrResult"
+  );
+
+
+const qrBib =
+  document.getElementById(
+    "qrBib"
+  );
+
+
+const webAppFrame =
+  document.getElementById(
+    "webAppFrame"
+  );
+
+
+const resultTitle =
+  document.getElementById(
+    "resultTitle"
+  );
+
+
+const manualBib =
+  document.getElementById(
+    "manualBib"
   );
 
 
 // =====================================================
-// STATE
-// =====================================================
-
-let scanner = null;
-
-let scanning = false;
-
-let scanLocked = false;
-
-let currentBib = "";
-
-
-// =====================================================
-// STATUS
+// SET STATUS
 // =====================================================
 
 function setStatus(
   message,
-  type = ""
+  type = "info"
 ) {
 
-  statusBox.className = "";
-
-  if (type) {
-
-    statusBox.classList.add(
-      type
-    );
-
-  }
-
-  statusBox.innerHTML =
+  statusElement.innerHTML =
     message;
 
-}
 
-
-// =====================================================
-// START CAMERA
-// =====================================================
-
-async function startScanner() {
-
-
-  if (scanning) {
-    return;
-  }
-
-
-  if (scanLocked) {
-    return;
-  }
-
-
-  // -------------------------------------------------
-  // HTTPS CHECK
-  // -------------------------------------------------
-
-  if (
-    window.location.protocol !==
-    "https:"
-  ) {
-
-    setStatus(
-
-      "❌ Scanner harus dibuka melalui HTTPS." +
-      "<br><br>" +
-      "Gunakan alamat GitHub Pages PTBFR.",
-
-      "error"
-
-    );
-
-    return;
-
-  }
-
-
-  startBtn.disabled =
-    true;
-
-
-  stopBtn.classList.remove(
-    "hidden"
-  );
-
-
-  newScanBtn.classList.add(
-    "hidden"
-  );
-
-
-  setStatus(
-
-    "📷 Meminta akses kamera..."
-
-  );
-
-
-  try {
-
-
-    // -------------------------------------------------
-    // CREATE SCANNER
-    // -------------------------------------------------
-
-    scanner =
-      new Html5Qrcode(
-        "reader"
-      );
-
-
-    // -------------------------------------------------
-    // GET AVAILABLE CAMERAS
-    // -------------------------------------------------
-
-    const cameras =
-      await Html5Qrcode.getCameras();
-
-
-    if (
-      !cameras ||
-      cameras.length === 0
-    ) {
-
-      throw new Error(
-        "Tidak ada kamera yang terdeteksi."
-      );
-
-    }
-
-
-    // -------------------------------------------------
-    // SELECT BACK CAMERA
-    // -------------------------------------------------
-
-    let cameraId =
-      cameras[0].id;
-
-
-    const preferredCamera =
-      cameras.find(
-        function(camera) {
-
-          return /back|rear|environment/i.test(
-            camera.label || ""
-          );
-
-        }
-      );
-
-
-    if (preferredCamera) {
-
-      cameraId =
-        preferredCamera.id;
-
-    }
-
-
-    // -------------------------------------------------
-    // START CAMERA
-    // -------------------------------------------------
-
-    await scanner.start(
-
-      cameraId,
-
-      {
-
-        fps: 10,
-
-        qrbox: {
-
-          width: 280,
-
-          height: 280
-
-        },
-
-        aspectRatio: 1
-
-      },
-
-      onScanSuccess,
-
-      function(errorMessage) {
-
-        // Ignore scanning errors.
-        // Scanner terus mencoba membaca QR.
-
-      }
-
-    );
-
-
-    scanning =
-      true;
-
-
-    setStatus(
-
-      "🟢 <b>KAMERA AKTIF</b>" +
-      "<br><br>" +
-      "Arahkan QR Code peserta ke kotak scanner.",
-
-      "success"
-
-    );
-
-
-  }
-
-  catch (error) {
-
-
-    console.error(
-      "Camera error:",
-      error
-    );
-
-
-    startBtn.disabled =
-      false;
-
-
-    stopBtn.classList.add(
-      "hidden"
-    );
-
-
-    let message =
-      "Kamera gagal dibuka.";
-
-
-    if (
-      error &&
-      error.message
-    ) {
-
-      message =
-        error.message;
-
-    }
-
-
-    const lowerMessage =
-      String(
-        message
-      ).toLowerCase();
-
-
-    if (
-      lowerMessage.includes(
-        "permission"
-      ) ||
-      lowerMessage.includes(
-        "notallowed"
-      ) ||
-      lowerMessage.includes(
-        "denied"
-      )
-    ) {
-
-      message =
-        "Izin kamera ditolak." +
-        "<br><br>" +
-        "Di iPhone/iPad buka:" +
-        "<br>" +
-        "Settings → Safari → Camera → Allow" +
-        "<br><br>" +
-        "Kemudian reload halaman scanner.";
-
-    }
-
-
-    setStatus(
-
-      "❌ " +
-      escapeHtml(
-        message
-      ),
-
-      "error"
-
-    );
-
-
-    if (scanner) {
-
-      try {
-
-        await scanner.clear();
-
-      }
-      catch (e) {}
-
-      scanner =
-        null;
-
-    }
-
-  }
-
-}
-
-
-// =====================================================
-// STOP CAMERA
-// =====================================================
-
-async function stopScanner() {
-
-
-  if (!scanner) {
-
-    scanning =
-      false;
-
-    startBtn.disabled =
-      false;
-
-    stopBtn.classList.add(
-      "hidden"
-    );
-
-    return;
-
-  }
-
-
-  try {
-
-    if (scanning) {
-
-      await scanner.stop();
-
-    }
-
-  }
-  catch (error) {
-
-    console.warn(
-      "Scanner stop:",
-      error
-    );
-
-  }
-
-
-  try {
-
-    await scanner.clear();
-
-  }
-  catch (error) {
-
-    console.warn(
-      "Scanner clear:",
-      error
-    );
-
-  }
-
-
-  scanner =
-    null;
-
-
-  scanning =
-    false;
-
-
-  startBtn.disabled =
-    false;
-
-
-  stopBtn.classList.add(
-    "hidden"
-  );
-
-}
-
-
-// =====================================================
-// QR SCAN SUCCESS
-// =====================================================
-
-async function onScanSuccess(
-  decodedText,
-  decodedResult
-) {
-
-
-  if (scanLocked) {
-
-    return;
-
-  }
-
-
-  scanLocked =
-    true;
-
-
-  console.log(
-    "QR decoded:",
-    decodedText
-  );
-
-
-  // -------------------------------------------------
-  // EXTRACT BIB
-  // -------------------------------------------------
-
-  const bib =
-    extractBib(
-      decodedText
-    );
-
-
-  if (!bib) {
-
-
-    scanLocked =
-      false;
-
-
-    setStatus(
-
-      "❌ QR tidak berisi nomor BIB yang valid." +
-      "<br><br>" +
-      "Isi QR harus seperti:" +
-      "<br>" +
-      "<b>5001</b>",
-
-      "error"
-
-    );
-
-
-    return;
-
-  }
-
-
-  currentBib =
-    bib;
-
-
-  bibValue.textContent =
-    bib;
-
-
-  scannedBib.classList.remove(
-    "hidden"
-  );
-
-
-  setStatus(
-
-    "✅ <b>QR TERBACA!</b>" +
-    "<br><br>" +
-    "BIB: <b>" +
-    escapeHtml(
-      bib
-    ) +
-    "</b>" +
-    "<br><br>" +
-    "<span class='loading'></span> " +
-    "Membuka data peserta...",
-
-    "success"
-
-  );
-
-
-  // -------------------------------------------------
-  // STOP CAMERA
-  // -------------------------------------------------
-
-  await stopScanner();
-
-
-  startBtn.classList.add(
-    "hidden"
-  );
-
-
-  // -------------------------------------------------
-  // OPEN PARTICIPANT
-  // -------------------------------------------------
-
-  openParticipantPage(
-    bib
-  );
+  statusElement.className =
+    "status status-" +
+    type;
 
 }
 
@@ -1063,122 +675,114 @@ async function onScanSuccess(
 // =====================================================
 
 function extractBib(
-  decodedText
+  value
 ) {
 
-
-  let value =
+  let text =
     String(
-      decodedText || ""
-    )
-    .trim();
+      value || ""
+    ).trim();
 
 
-  if (!value) {
-
+  if (!text) {
     return "";
-
   }
 
 
-  // =================================================
-  // FORMAT 1
-  // QR BERISI BIB LANGSUNG
-  // =================================================
+  // ---------------------------------------------------
+  // PLAIN BIB
+  // ---------------------------------------------------
 
   if (
     /^\d+$/.test(
-      value
+      text
     )
   ) {
 
-    return value;
+    return text;
 
   }
 
 
-  // =================================================
-  // FORMAT 2
-  // URL ?bib=5001
-  // =================================================
+  // ---------------------------------------------------
+  // URL
+  // ---------------------------------------------------
 
   try {
 
-
     const url =
       new URL(
-        value
+        text
       );
 
 
-    const bibParam =
+    const bib =
       url.searchParams.get(
         "bib"
       );
 
 
+    if (bib) {
+
+      return bib.trim();
+
+    }
+
+  }
+
+  catch (error) {
+
+    // Not a URL
+
+  }
+
+
+  // ---------------------------------------------------
+  // REGISTRATION ID / BIB
+  // ---------------------------------------------------
+
+  const parts =
+    text.split(
+      "/"
+    );
+
+
+  if (
+    parts.length >= 2
+  ) {
+
+    const last =
+      parts[
+        parts.length - 1
+      ].trim();
+
+
     if (
-      bibParam &&
       /^\d+$/.test(
-        bibParam.trim()
+        last
       )
     ) {
 
-      return bibParam.trim();
+      return last;
 
     }
-
-
-    // -----------------------------------------------
-    // ?code=...
-    // -----------------------------------------------
-
-    const codeParam =
-      url.searchParams.get(
-        "code"
-      );
-
-
-    if (codeParam) {
-
-
-      const codeMatch =
-        codeParam.match(
-          /(\d+)$/
-        );
-
-
-      if (codeMatch) {
-
-        return codeMatch[1];
-
-      }
-
-    }
-
-
-  }
-  catch (error) {
-
-    // Bukan URL.
 
   }
 
 
-  // =================================================
-  // FORMAT 3
-  // TEXT YANG BERAKHIR DENGAN ANGKA
-  // =================================================
+  // ---------------------------------------------------
+  // FIND NUMBER
+  // ---------------------------------------------------
 
   const match =
-    value.match(
-      /(\d+)$/
+    text.match(
+      /\b\d{3,6}\b/
     );
 
 
   if (match) {
 
-    return match[1];
+    return match[0];
 
   }
 
@@ -1189,256 +793,650 @@ function extractBib(
 
 
 // =====================================================
-// OPEN PARTICIPANT
+// START CAMERA
 // =====================================================
 
-function openParticipantPage(
-  bib
-) {
+async function startCamera() {
 
 
-  // -------------------------------------------------
-  // SHOW RESULT FRAME
-  // -------------------------------------------------
+  if (cameraRunning) {
+    return;
+  }
 
-  resultFrame.style.display =
-    "block";
-
-
-  // -------------------------------------------------
-  // CLEAR OLD FRAME
-  // -------------------------------------------------
-
-  resultFrame.src =
-    "about:blank";
-
-
-  // -------------------------------------------------
-  // SUBMIT AFTER SHORT DELAY
-  // -------------------------------------------------
-
-  setTimeout(
-    function() {
-
-      submitBibToAppsScript(
-        bib
-      );
-
-    },
-    200
-  );
-
-
-  // -------------------------------------------------
-  // SHOW NEW SCAN BUTTON
-  // -------------------------------------------------
-
-  newScanBtn.classList.remove(
-    "hidden"
-  );
-
-}
-
-
-// =====================================================
-// POST BIB TO APPS SCRIPT
-// =====================================================
-
-function submitBibToAppsScript(
-  bib
-) {
-
-
-  // -------------------------------------------------
-  // CREATE FORM
-  // -------------------------------------------------
-
-  const form =
-    document.createElement(
-      "form"
-    );
-
-
-  form.method =
-    "POST";
-
-
-  form.action =
-    WEB_APP_URL;
-
-
-  form.target =
-    "ptbfrResultFrame";
-
-
-  form.style.display =
-    "none";
-
-
-  // -------------------------------------------------
-  // BIB FIELD
-  // -------------------------------------------------
-
-  const input =
-    document.createElement(
-      "input"
-    );
-
-
-  input.type =
-    "hidden";
-
-
-  input.name =
-    "bib";
-
-
-  input.value =
-    String(
-      bib
-    );
-
-
-  form.appendChild(
-    input
-  );
-
-
-  // -------------------------------------------------
-  // ADD FORM
-  // -------------------------------------------------
-
-  document.body.appendChild(
-    form
-  );
-
-
-  // -------------------------------------------------
-  // STATUS
-  // -------------------------------------------------
-
-  setStatus(
-
-    "🔎 Mencari peserta..." +
-    "<br><br>" +
-    "BIB <b>" +
-    escapeHtml(
-      bib
-    ) +
-    "</b>",
-
-    "success"
-
-  );
-
-
-  // -------------------------------------------------
-  // SUBMIT
-  // -------------------------------------------------
-
-  form.submit();
-
-
-  // -------------------------------------------------
-  // CLEAN FORM
-  // -------------------------------------------------
-
-  setTimeout(
-    function() {
-
-      try {
-
-        form.remove();
-
-      }
-      catch (error) {}
-
-    },
-    2000
-  );
-
-}
-
-
-// =====================================================
-// NEW SCAN
-// =====================================================
-
-async function newScan() {
-
-
-  // -------------------------------------------------
-  // STOP CAMERA
-  // -------------------------------------------------
-
-  await stopScanner();
-
-
-  // -------------------------------------------------
-  // RESET STATE
-  // -------------------------------------------------
 
   scanLocked =
     false;
 
-  currentBib =
-    "";
-
-
-  // -------------------------------------------------
-  // RESET BIB
-  // -------------------------------------------------
-
-  bibValue.textContent =
-    "";
-
-
-  scannedBib.classList.add(
-    "hidden"
-  );
-
-
-  // -------------------------------------------------
-  // RESET RESULT FRAME
-  // -------------------------------------------------
-
-  resultFrame.src =
-    "about:blank";
-
-
-  resultFrame.style.display =
-    "none";
-
-
-  // -------------------------------------------------
-  // RESET BUTTONS
-  // -------------------------------------------------
-
-  newScanBtn.classList.add(
-    "hidden"
-  );
-
-
-  startBtn.classList.remove(
-    "hidden"
-  );
-
-
-  startBtn.disabled =
-    false;
-
-
-  // -------------------------------------------------
-  // RESET STATUS
-  // -------------------------------------------------
 
   setStatus(
+    "Meminta akses kamera...",
+    "info"
+  );
 
-    "Siap untuk scan peserta berikutnya."
 
+  startButton.disabled =
+    true;
+
+
+  try {
+
+
+    html5QrCode =
+      new Html5Qrcode(
+        "reader"
+      );
+
+
+    const config = {
+
+      fps: 10,
+
+      qrbox: function(
+        viewfinderWidth,
+        viewfinderHeight
+      ) {
+
+        const size =
+          Math.floor(
+            Math.min(
+              viewfinderWidth,
+              viewfinderHeight
+            ) * 0.70
+          );
+
+        return {
+          width: size,
+          height: size
+        };
+
+      },
+
+      aspectRatio: 1.0,
+
+      rememberLastUsedCamera: true
+
+    };
+
+
+    await html5QrCode.start(
+
+      {
+        facingMode: "environment"
+      },
+
+      config,
+
+      onScanSuccess,
+
+      onScanFailure
+
+    );
+
+
+    cameraRunning =
+      true;
+
+
+    startButton.style.display =
+      "none";
+
+
+    stopButton.style.display =
+      "block";
+
+
+    setStatus(
+      "📷 Kamera aktif. Arahkan kamera ke QR peserta.",
+      "success"
+    );
+
+  }
+
+
+  catch (error) {
+
+
+    console.error(
+      "Camera error:",
+      error
+    );
+
+
+    startButton.disabled =
+      false;
+
+
+    cameraRunning =
+      false;
+
+
+    setStatus(
+      "Kamera tidak dapat dibuka. Pastikan izin kamera diberikan.",
+      "error"
+    );
+
+  }
+
+}
+
+
+// =====================================================
+// SCAN FAILURE
+// =====================================================
+
+function onScanFailure(
+  errorMessage
+) {
+
+  // Sengaja dikosongkan.
+  // Error scan per frame tidak perlu
+  // ditampilkan kepada user.
+
+}
+
+
+// =====================================================
+// SCAN SUCCESS
+// =====================================================
+
+function onScanSuccess(
+  decodedText,
+  decodedResult
+) {
+
+
+  if (scanLocked) {
+    return;
+  }
+
+
+  const bib =
+    extractBib(
+      decodedText
+    );
+
+
+  if (!bib) {
+
+    setStatus(
+      "QR terbaca, tetapi nomor BIB tidak ditemukan.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  scanLocked =
+    true;
+
+
+  lastBib =
+    bib;
+
+
+  // ---------------------------------------------------
+  // DISPLAY QR RESULT
+  // ---------------------------------------------------
+
+  qrBib.textContent =
+    bib;
+
+
+  qrResult.style.display =
+    "block";
+
+
+  // ---------------------------------------------------
+  // DISPLAY RESULT FRAME
+  // ---------------------------------------------------
+
+  resultTitle.style.display =
+    "block";
+
+
+  webAppFrame.style.display =
+    "block";
+
+
+  // ---------------------------------------------------
+  // STATUS
+  // ---------------------------------------------------
+
+  setStatus(
+    "✓ QR TERBACA<br>" +
+    "Mencari peserta dengan BIB <strong>" +
+    escapeHtml(bib) +
+    "</strong>...",
+    "success"
+  );
+
+
+  // ---------------------------------------------------
+  // OPEN WEB APP
+  // ---------------------------------------------------
+
+  loadParticipantPage(
+    bib
   );
 
 }
+
+
+// =====================================================
+// LOAD PARTICIPANT PAGE
+// =====================================================
+
+function loadParticipantPage(
+  bib
+) {
+
+
+  // ---------------------------------------------------
+  // Jika iframe belum memiliki source,
+  // buka Web App terlebih dahulu.
+  // ---------------------------------------------------
+
+  const currentSource =
+    webAppFrame.getAttribute(
+      "src"
+    );
+
+
+  if (
+    !currentSource
+  ) {
+
+    webAppFrame.src =
+      WEB_APP_URL;
+
+
+    webAppFrame.onload =
+      function() {
+
+        sendBibToWebApp(
+          bib
+        );
+
+      };
+
+
+    return;
+
+  }
+
+
+  // ---------------------------------------------------
+  // Jika sudah terbuka,
+  // langsung kirim BIB.
+  // ---------------------------------------------------
+
+  sendBibToWebApp(
+    bib
+  );
+
+}
+
+
+// =====================================================
+// SEND BIB TO WEB APP
+// =====================================================
+
+function sendBibToWebApp(
+  bib
+) {
+
+
+  setStatus(
+    "Mengirim BIB <strong>" +
+    escapeHtml(bib) +
+    "</strong> ke sistem PTBFR...",
+    "info"
+  );
+
+
+  try {
+
+    webAppFrame.contentWindow.postMessage(
+
+      {
+        type:
+          "PTBFR_BIB_SCAN",
+
+        bib:
+          bib
+
+      },
+
+      "*"
+
+    );
+
+
+    // -------------------------------------------------
+    // Kirim beberapa kali untuk memastikan pesan
+    // diterima setelah halaman selesai loading.
+    // -------------------------------------------------
+
+    let count =
+      0;
+
+
+    const interval =
+      setInterval(
+        function() {
+
+
+          count++;
+
+
+          try {
+
+            webAppFrame.contentWindow.postMessage(
+
+              {
+                type:
+                  "PTBFR_BIB_SCAN",
+
+                bib:
+                  bib
+
+              },
+
+              "*"
+
+            );
+
+          }
+
+          catch (error) {
+
+            console.error(
+              error
+            );
+
+          }
+
+
+          if (
+            count >= 5
+          ) {
+
+            clearInterval(
+              interval
+            );
+
+          }
+
+        },
+
+        700
+      );
+
+
+    setStatus(
+      "✓ BIB <strong>" +
+      escapeHtml(bib) +
+      "</strong> dikirim. Menunggu data peserta...",
+      "success"
+    );
+
+  }
+
+
+  catch (error) {
+
+    console.error(
+      "postMessage error:",
+      error
+    );
+
+
+    setStatus(
+      "Gagal mengirim BIB ke sistem.",
+      "error"
+    );
+
+  }
+
+}
+
+
+// =====================================================
+// MANUAL SEARCH
+// =====================================================
+
+function manualSearch() {
+
+
+  const value =
+    String(
+      manualBib.value || ""
+    ).trim();
+
+
+  const bib =
+    extractBib(
+      value
+    );
+
+
+  if (!bib) {
+
+    setStatus(
+      "Masukkan nomor BIB terlebih dahulu.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  scanLocked =
+    true;
+
+
+  lastBib =
+    bib;
+
+
+  qrBib.textContent =
+    bib;
+
+
+  qrResult.style.display =
+    "block";
+
+
+  resultTitle.style.display =
+    "block";
+
+
+  webAppFrame.style.display =
+    "block";
+
+
+  loadParticipantPage(
+    bib
+  );
+
+}
+
+
+// =====================================================
+// RESET SCANNER
+// =====================================================
+
+function resetScanner() {
+
+
+  scanLocked =
+    false;
+
+
+  lastBib =
+    "";
+
+
+  manualBib.value =
+    "";
+
+
+  qrBib.textContent =
+    "-";
+
+
+  qrResult.style.display =
+    "none";
+
+
+  resultTitle.style.display =
+    "none";
+
+
+  // ---------------------------------------------------
+  // Jangan reload iframe.
+  // Kita cukup kirim reset dengan cara
+  // membuka ulang halaman Apps Script.
+  // ---------------------------------------------------
+
+  webAppFrame.style.display =
+    "none";
+
+
+  webAppFrame.onload =
+    null;
+
+
+  webAppFrame.removeAttribute(
+    "src"
+  );
+
+
+  setStatus(
+    "Tekan <strong>START CAMERA</strong> untuk scan QR peserta berikutnya.",
+    "info"
+  );
+
+
+  if (
+    cameraRunning
+  ) {
+
+    setStatus(
+      "📷 Kamera aktif. Arahkan ke QR peserta berikutnya.",
+      "success"
+    );
+
+  }
+
+}
+
+
+// =====================================================
+// STOP CAMERA
+// =====================================================
+
+async function stopCamera() {
+
+
+  if (
+    !html5QrCode ||
+    !cameraRunning
+  ) {
+
+    return;
+
+  }
+
+
+  try {
+
+    await html5QrCode.stop();
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Stop camera error:",
+      error
+    );
+
+  }
+
+
+  try {
+
+    html5QrCode.clear();
+
+  }
+
+  catch (error) {
+
+    console.error(
+      "Clear camera error:",
+      error
+    );
+
+  }
+
+
+  html5QrCode =
+    null;
+
+
+  cameraRunning =
+    false;
+
+
+  scanLocked =
+    false;
+
+
+  startButton.style.display =
+    "block";
+
+
+  startButton.disabled =
+    false;
+
+
+  stopButton.style.display =
+    "none";
+
+
+  setStatus(
+    "Kamera berhenti. Tekan START CAMERA untuk mulai lagi.",
+    "info"
+  );
+
+}
+
+
+// =====================================================
+// IFRAME LOAD EVENT
+// =====================================================
+
+webAppFrame.addEventListener(
+  "load",
+  function() {
+
+
+    if (
+      lastBib
+    ) {
+
+      sendBibToWebApp(
+        lastBib
+      );
+
+    }
+
+  }
+);
 
 
 // =====================================================
@@ -1451,7 +1449,9 @@ function escapeHtml(
 
 
   return String(
-    text
+    text == null
+      ? ""
+      : text
   )
 
   .replace(
@@ -1483,51 +1483,25 @@ function escapeHtml(
 
 
 // =====================================================
-// BUTTON EVENTS
+// ENTER KEY - MANUAL SEARCH
 // =====================================================
 
-startBtn.addEventListener(
+manualBib.addEventListener(
+  "keydown",
+  function(event) {
 
-  "click",
+    if (
+      event.key ===
+      "Enter"
+    ) {
 
-  startScanner
+      event.preventDefault();
 
-);
+      manualSearch();
 
-
-stopBtn.addEventListener(
-
-  "click",
-
-  async function() {
-
-
-    await stopScanner();
-
-
-    scanLocked =
-      false;
-
-
-    setStatus(
-
-      "Kamera dihentikan." +
-      "<br><br>" +
-      "Tekan START CAMERA untuk scan lagi."
-
-    );
+    }
 
   }
-
-);
-
-
-newScanBtn.addEventListener(
-
-  "click",
-
-  newScan
-
 );
 
 
@@ -1536,54 +1510,19 @@ newScanBtn.addEventListener(
 // =====================================================
 
 window.addEventListener(
-
   "load",
-
   function() {
 
-    setStatus(
-
-      "Tekan <b>START CAMERA</b> untuk mulai scan QR peserta."
-
+    console.log(
+      "PTBFR Camera Scanner loaded."
     );
 
   }
-
-);
-
-
-// =====================================================
-// CLEANUP
-// =====================================================
-
-window.addEventListener(
-
-  "beforeunload",
-
-  function() {
-
-
-    if (
-      scanner &&
-      scanning
-    ) {
-
-
-      try {
-
-        scanner.stop();
-
-      }
-      catch (error) {}
-
-    }
-
-  }
-
 );
 
 
 </script>
+
 
 </body>
 
