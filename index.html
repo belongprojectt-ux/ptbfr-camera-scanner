@@ -2,6 +2,7 @@
 <html lang="id">
 
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -9,384 +10,560 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>PTBFR 2026 - Race Pack Collection Scanner</title>
+  <title>
+    PTBFR 2026 - Race Pack Collection Scanner
+  </title>
 
-  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+  <!-- QR SCANNER LIBRARY -->
+  <script
+    src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
+  </script>
+
 
   <style>
+
     * {
       box-sizing: border-box;
     }
 
+
     html,
     body {
+
       margin: 0;
       padding: 0;
+
       width: 100%;
       min-height: 100%;
-      font-family: Arial, Helvetica, sans-serif;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
       background: #f5f7fa;
+
       color: #111827;
+
     }
+
 
     body {
+
       padding: 20px;
+
     }
+
 
     .container {
+
       width: 100%;
       max-width: 700px;
+
       margin: 0 auto;
+
     }
+
+
+    /* ============================================================
+       HEADER
+       ============================================================ */
 
     .header {
+
       background: #111827;
+
       color: white;
+
       border-radius: 18px;
+
       padding: 24px 20px;
+
       text-align: center;
+
       margin-bottom: 18px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+
+      box-shadow:
+        0 8px 25px
+        rgba(0, 0, 0, 0.08);
+
     }
+
 
     .header h1 {
+
       margin: 0;
+
       font-size: 28px;
+
       line-height: 1.2;
+
     }
+
 
     .header p {
+
       margin: 8px 0 0;
+
       font-size: 14px;
+
       opacity: 0.85;
+
     }
+
+
+    /* ============================================================
+       CARD
+       ============================================================ */
 
     .card {
+
       background: white;
+
       border-radius: 18px;
+
       padding: 20px;
+
       margin-bottom: 18px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+
+      box-shadow:
+        0 6px 20px
+        rgba(0, 0, 0, 0.07);
+
     }
+
 
     .card-title {
+
       font-size: 18px;
+
       font-weight: bold;
+
       margin-bottom: 14px;
+
     }
+
+
+    /* ============================================================
+       CAMERA
+       ============================================================ */
 
     #reader {
+
       width: 100%;
+
       overflow: hidden;
+
       border-radius: 14px;
+
       background: #111827;
+
       min-height: 260px;
+
     }
+
 
     #reader video {
+
       width: 100% !important;
+
       border-radius: 14px;
+
     }
+
+
+    #reader__dashboard {
+
+      color: white !important;
+
+    }
+
+
+    #reader__dashboard_section {
+
+      padding: 10px !important;
+
+    }
+
+
+    #reader__dashboard_section_csr {
+
+      color: white !important;
+
+    }
+
 
     .camera-placeholder {
+
       min-height: 260px;
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       text-align: center;
+
       color: #9ca3af;
+
       padding: 30px;
+
       font-size: 15px;
+
+      line-height: 1.6;
+
     }
+
+
+    /* ============================================================
+       BUTTONS
+       ============================================================ */
 
     .button-row {
+
       display: flex;
+
       gap: 10px;
+
       flex-wrap: wrap;
+
       margin-top: 14px;
+
     }
+
 
     button {
+
       border: 0;
+
       border-radius: 12px;
+
       padding: 13px 18px;
+
       font-size: 15px;
+
       font-weight: bold;
+
       cursor: pointer;
+
       transition: 0.2s;
+
     }
+
 
     button:active {
+
       transform: scale(0.98);
+
     }
+
 
     .btn-primary {
+
       background: #111827;
+
       color: white;
+
     }
+
 
     .btn-primary:hover {
+
       background: #1f2937;
+
     }
 
-    .btn-success {
-      background: #16a34a;
-      color: white;
-    }
-
-    .btn-success:hover {
-      background: #15803d;
-    }
 
     .btn-danger {
+
       background: #dc2626;
+
       color: white;
+
     }
+
 
     .btn-secondary {
+
       background: #e5e7eb;
+
       color: #111827;
+
     }
 
-    .btn-warning {
-      background: #f59e0b;
-      color: #111827;
-    }
 
     button:disabled {
+
       opacity: 0.5;
+
       cursor: not-allowed;
+
     }
+
+
+    /* ============================================================
+       STATUS
+       ============================================================ */
 
     .status {
+
       margin-top: 12px;
+
       padding: 12px 14px;
+
       border-radius: 10px;
+
       font-size: 14px;
+
       display: none;
+
       line-height: 1.5;
+
     }
+
 
     .status.show {
+
       display: block;
+
     }
+
 
     .status.info {
+
       background: #eff6ff;
+
       color: #1d4ed8;
+
     }
+
 
     .status.success {
+
       background: #f0fdf4;
+
       color: #15803d;
+
     }
+
 
     .status.error {
+
       background: #fef2f2;
+
       color: #b91c1c;
+
     }
+
 
     .status.warning {
+
       background: #fffbeb;
+
       color: #92400e;
+
     }
+
+
+    /* ============================================================
+       SEARCH
+       ============================================================ */
 
     .search-row {
+
       display: flex;
+
       gap: 10px;
+
     }
+
 
     .search-row input {
+
       flex: 1;
+
       min-width: 0;
-      border: 1px solid #d1d5db;
+
+      border:
+        1px solid #d1d5db;
+
       border-radius: 12px;
+
       padding: 13px 14px;
+
       font-size: 15px;
+
       outline: none;
+
     }
+
 
     .search-row input:focus {
+
       border-color: #111827;
-      box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(17, 24, 39, 0.08);
+
     }
 
-    .result {
-      display: none;
-      margin-top: 18px;
-    }
 
-    .result.show {
-      display: block;
-    }
-
-    .participant-card {
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      overflow: hidden;
-    }
-
-    .participant-header {
-      background: #111827;
-      color: white;
-      padding: 18px;
-    }
-
-    .participant-header .label {
-      font-size: 12px;
-      opacity: 0.7;
-      margin-bottom: 5px;
-    }
-
-    .participant-header .name {
-      font-size: 22px;
-      font-weight: bold;
-      line-height: 1.3;
-    }
-
-    .participant-body {
-      padding: 16px;
-    }
-
-    .data-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 10px 0;
-      border-bottom: 1px solid #f0f0f0;
-    }
-
-    .data-row:last-child {
-      border-bottom: 0;
-    }
-
-    .data-label {
-      color: #6b7280;
-      font-size: 14px;
-    }
-
-    .data-value {
-      text-align: right;
-      font-weight: bold;
-      font-size: 14px;
-      word-break: break-word;
-    }
-
-    .race-pack {
-      margin-top: 15px;
-      padding: 15px;
-      border-radius: 12px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 18px;
-    }
-
-    .race-pack.available {
-      background: #fef3c7;
-      color: #92400e;
-    }
-
-    .race-pack.collected {
-      background: #dcfce7;
-      color: #166534;
-    }
-
-    .collect-button {
-      width: 100%;
-      margin-top: 15px;
-      font-size: 17px;
-      padding: 15px;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .small-note {
-      margin-top: 10px;
-      font-size: 12px;
-      color: #6b7280;
-      line-height: 1.5;
-    }
+    /* ============================================================
+       SCAN VALUE
+       ============================================================ */
 
     .scan-value {
+
       margin-top: 10px;
+
       padding: 10px 12px;
+
       background: #f3f4f6;
+
       border-radius: 10px;
+
       font-family: monospace;
+
       font-size: 13px;
+
       word-break: break-word;
+
       display: none;
+
     }
+
 
     .scan-value.show {
+
       display: block;
+
     }
 
-    .footer {
-      text-align: center;
-      color: #6b7280;
+
+    /* ============================================================
+       NOTES
+       ============================================================ */
+
+    .small-note {
+
+      margin-top: 10px;
+
       font-size: 12px;
-      padding: 10px 0 25px;
+
+      color: #6b7280;
+
+      line-height: 1.5;
+
     }
+
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+
+    .footer {
+
+      text-align: center;
+
+      color: #6b7280;
+
+      font-size: 12px;
+
+      padding: 10px 0 25px;
+
+    }
+
+
+    /* ============================================================
+       MOBILE
+       ============================================================ */
 
     @media (max-width: 600px) {
 
       body {
+
         padding: 12px;
+
       }
+
 
       .header {
+
         padding: 20px 15px;
+
       }
+
 
       .header h1 {
+
         font-size: 23px;
+
       }
+
 
       .card {
+
         padding: 15px;
+
       }
+
 
       .search-row {
+
         flex-direction: column;
+
       }
+
 
       .search-row button {
+
         width: 100%;
+
       }
 
-      .data-row {
-        flex-direction: column;
-        gap: 4px;
-      }
-
-      .data-value {
-        text-align: left;
-      }
     }
+
   </style>
+
 </head>
 
 
 <body>
 
+
   <div class="container">
 
-    <!-- HEADER -->
+
+    <!-- ==========================================================
+         HEADER
+         ========================================================== -->
+
     <div class="header">
-      <h1>PTBFR 2026</h1>
-      <p>Race Pack Collection Scanner</p>
+
+      <h1>
+        PTBFR 2026
+      </h1>
+
+      <p>
+        Race Pack Collection Scanner
+      </p>
+
     </div>
 
 
-    <!-- CAMERA -->
+    <!-- ==========================================================
+         CAMERA
+         ========================================================== -->
+
     <div class="card">
 
       <div class="card-title">
         📷 Scan QR Code
       </div>
+
 
       <div id="reader">
 
@@ -394,11 +571,16 @@
           id="cameraPlaceholder"
           class="camera-placeholder"
         >
+
           Kamera belum aktif.<br>
-          Tekan tombol <b>START CAMERA</b>.
+
+          Tekan tombol
+          <b>START CAMERA</b>.
+
         </div>
 
       </div>
+
 
       <div class="button-row">
 
@@ -407,8 +589,11 @@
           class="btn-primary"
           onclick="startCamera()"
         >
+
           📷 START CAMERA
+
         </button>
+
 
         <button
           id="stopCameraButton"
@@ -416,35 +601,49 @@
           onclick="stopCamera()"
           disabled
         >
+
           ⏹ STOP CAMERA
+
         </button>
 
       </div>
+
 
       <div
         id="cameraStatus"
         class="status"
       ></div>
 
+
       <div
         id="scanValue"
         class="scan-value"
       ></div>
 
+
       <div class="small-note">
-        QR Code dapat berisi <b>BIB</b>, <b>Nama Lengkap</b>,
-        atau <b>Registration ID</b>.
+
+        QR Code dapat berisi
+        <b>BIB</b>,
+        <b>Nama Lengkap</b>,
+        atau
+        <b>Registration ID</b>.
+
       </div>
 
     </div>
 
 
-    <!-- MANUAL SEARCH -->
+    <!-- ==========================================================
+         MANUAL SEARCH
+         ========================================================== -->
+
     <div class="card">
 
       <div class="card-title">
         🔎 Manual Search
       </div>
+
 
       <div class="search-row">
 
@@ -456,14 +655,18 @@
           onkeydown="handleSearchKey(event)"
         >
 
+
         <button
           class="btn-primary"
-          onclick="searchParticipant()"
+          onclick="manualSearch()"
         >
+
           SEARCH
+
         </button>
 
       </div>
+
 
       <div
         id="searchStatus"
@@ -473,148 +676,20 @@
     </div>
 
 
-    <!-- PARTICIPANT RESULT -->
-    <div
-      id="result"
-      class="result"
-    >
-
-      <div class="card">
-
-        <div class="card-title">
-          👤 Participant
-        </div>
-
-        <div class="participant-card">
-
-          <div class="participant-header">
-
-            <div class="label">
-              NAMA LENGKAP SESUAI KTP
-            </div>
-
-            <div
-              id="participantName"
-              class="name"
-            >
-            </div>
-
-          </div>
-
-
-          <div class="participant-body">
-
-            <div class="data-row">
-
-              <div class="data-label">
-                BIB
-              </div>
-
-              <div
-                id="participantBib"
-                class="data-value"
-              >
-              </div>
-
-            </div>
-
-
-            <div class="data-row">
-
-              <div class="data-label">
-                Nomor Identitas
-              </div>
-
-              <div
-                id="participantId"
-                class="data-value"
-              >
-              </div>
-
-            </div>
-
-
-            <div class="data-row">
-
-              <div class="data-label">
-                Category
-              </div>
-
-              <div
-                id="participantCategory"
-                class="data-value"
-              >
-              </div>
-
-            </div>
-
-
-            <div class="data-row">
-
-              <div class="data-label">
-                Jersey
-              </div>
-
-              <div
-                id="participantJersey"
-                class="data-value"
-              >
-              </div>
-
-            </div>
-
-
-            <div class="data-row">
-
-              <div class="data-label">
-                Registration ID
-              </div>
-
-              <div
-                id="participantRegId"
-                class="data-value"
-              >
-              </div>
-
-            </div>
-
-
-            <div
-              id="racePackStatus"
-              class="race-pack"
-            >
-            </div>
-
-
-            <button
-              id="collectButton"
-              class="collect-button btn-success"
-              onclick="collectRacePack()"
-            >
-              ✅ COLLECT RACE PACK
-            </button>
-
-
-            <button
-              class="collect-button btn-secondary"
-              onclick="resetResult()"
-            >
-              🔄 RESET
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
+    <!-- ==========================================================
+         FOOTER
+         ========================================================== -->
 
     <div class="footer">
-      Pangkung Tibah Beach Fun Run 2026<br>
+
+      Pangkung Tibah Beach Fun Run 2026
+
+      <br>
+
       BeLong Project
+
     </div>
+
 
   </div>
 
@@ -625,14 +700,23 @@
      * ============================================================
      * CONFIGURATION
      * ============================================================
+     *
+     * IMPORTANT:
+     * This is the current Apps Script Web App.
+     *
+     * We DO NOT use window.open().
+     *
+     * We DO NOT use postMessage().
+     *
+     * We simply navigate to:
+     *
+     * /exec?q=5001
+     *
+     * ============================================================
      */
 
     const WEB_APP_URL =
       "https://script.google.com/macros/s/AKfycbzNmycrVEH4IpN97FYP_6BOaVKkMLgh560OcaVcv0zqqJH9rWMXqwzWN9GtI018zUR_/exec";
-
-
-    const GITHUB_ORIGIN =
-      "https://belongprojectt-ux.github.io";
 
 
     /*
@@ -645,15 +729,11 @@
 
     let cameraRunning = false;
 
-    let webAppWindow = null;
-
-    let currentParticipant = null;
-
     let lastScannedText = "";
 
     let lastScanTime = 0;
 
-    let sendRetryTimer = null;
+    let scanRedirecting = false;
 
 
     /*
@@ -662,43 +742,14 @@
      * ============================================================
      */
 
-    window.addEventListener("load", function () {
+    window.addEventListener(
+      "load",
+      function() {
 
-      showCameraPlaceholder();
+        showCameraPlaceholder();
 
-      /*
-       * Listen for messages from the Apps Script Web App.
-       */
-      window.addEventListener(
-        "message",
-        handleWebAppMessage
-      );
-
-    });
-
-
-    /*
-     * ============================================================
-     * CAMERA PLACEHOLDER
-     * ============================================================
-     */
-
-    function showCameraPlaceholder() {
-
-      const reader =
-        document.getElementById("reader");
-
-      reader.innerHTML = `
-        <div
-          id="cameraPlaceholder"
-          class="camera-placeholder"
-        >
-          Kamera belum aktif.<br>
-          Tekan tombol <b>START CAMERA</b>.
-        </div>
-      `;
-
-    }
+      }
+    );
 
 
     /*
@@ -710,40 +761,41 @@
     async function startCamera() {
 
       if (cameraRunning) {
+
         return;
+
       }
 
 
+      /*
+       * IMPORTANT:
+       *
+       * There is NO window.open()
+       * here.
+       *
+       * The current page remains the scanner.
+       */
+
       setCameraStatus(
-        "Membuka halaman participant...",
+        "Mengaktifkan kamera...",
         "info"
       );
-
-
-      /*
-       * Open Apps Script Web App first.
-       */
-      openWebAppWindow();
-
-
-      /*
-       * Small delay so the browser has time
-       * to create the new window.
-       */
-      await sleep(700);
 
 
       try {
 
         html5QrCode =
-          new Html5Qrcode("reader");
+          new Html5Qrcode(
+            "reader"
+          );
 
 
         const config = {
 
           fps: 10,
 
-          qrbox: function (
+
+          qrbox: function(
             viewfinderWidth,
             viewfinderHeight
           ) {
@@ -754,19 +806,26 @@
                 viewfinderHeight
               );
 
+
             const size =
               Math.floor(
                 minEdge * 0.70
               );
 
+
             return {
+
               width: size,
+
               height: size
+
             };
 
           },
 
+
           aspectRatio: 1.0,
+
 
           rememberLastUsedCamera: true
 
@@ -815,13 +874,13 @@
         );
 
 
+        cameraRunning = false;
+
+
         setCameraStatus(
-          "Kamera gagal dibuka. Pastikan browser memiliki izin kamera.",
+          "Kamera gagal dibuka. Pastikan izin kamera diberikan.",
           "error"
         );
-
-
-        console.error(error);
 
       }
 
@@ -908,14 +967,21 @@
       decodedResult
     ) {
 
+      if (scanRedirecting) {
+
+        return;
+
+      }
+
+
       const now =
         Date.now();
 
 
       /*
-       * Prevent the same QR from being
-       * processed repeatedly.
+       * Prevent duplicate scan.
        */
+
       if (
         decodedText === lastScannedText &&
         now - lastScanTime < 3000
@@ -929,27 +995,21 @@
       lastScannedText =
         decodedText;
 
+
       lastScanTime =
         now;
 
 
       /*
-       * IMPORTANT:
+       * Use the COMPLETE QR CONTENT.
        *
-       * We DO NOT extract only numbers anymore.
-       *
-       * The complete QR content is sent as-is.
-       *
-       * Examples:
-       *
-       * 5001
-       * I Gusti Made Dharma Putra Sesana
-       * PTBFR2026-0001
+       * DO NOT extract numbers only.
        */
 
       const scanValue =
-        String(decodedText || "")
-          .trim();
+        String(
+          decodedText || ""
+        ).trim();
 
 
       if (!scanValue) {
@@ -960,28 +1020,90 @@
 
 
       console.log(
-        "QR SCANNED:",
+        "QR CONTENT:",
         scanValue
       );
 
+
+      /*
+       * Display what was scanned.
+       */
 
       showScanValue(
         scanValue
       );
 
 
+      /*
+       * Prevent multiple redirects.
+       */
+
+      scanRedirecting = true;
+
+
       setCameraStatus(
-        "QR berhasil dibaca. Mencari peserta...",
+        "QR berhasil dibaca. Membuka data peserta...",
         "success"
       );
 
 
       /*
-       * Send the RAW QR content.
+       * Stop camera before redirect.
        */
-      sendScanToWebApp(
-        scanValue
-      );
+
+      stopCamera()
+        .catch(
+          function(error) {
+
+            console.error(
+              error
+            );
+
+          }
+        )
+        .finally(
+          function() {
+
+            /*
+             * IMPORTANT:
+             *
+             * Encode the COMPLETE QR content.
+             *
+             * Examples:
+             *
+             * 5001
+             *
+             * I Gusti Made Dharma Putra Sesana
+             *
+             * PTBFR2026-0001
+             */
+
+            const targetUrl =
+              WEB_APP_URL +
+              "?q=" +
+              encodeURIComponent(
+                scanValue
+              );
+
+
+            console.log(
+              "Redirecting to:",
+              targetUrl
+            );
+
+
+            /*
+             * SAME TAB.
+             *
+             * No new tab.
+             * No popup.
+             */
+
+            window.location.href =
+              targetUrl;
+
+          }
+        );
 
     }
 
@@ -992,263 +1114,15 @@
      * ============================================================
      */
 
-    function onScanFailure(errorMessage) {
-
-      /*
-       * This is normal while the camera
-       * is searching for a QR.
-       *
-       * Do not display errors continuously.
-       */
-
-    }
-
-
-    /*
-     * ============================================================
-     * OPEN WEB APP WINDOW
-     * ============================================================
-     */
-
-    function openWebAppWindow() {
-
-      /*
-       * If the previous window still exists,
-       * reuse it.
-       */
-      if (
-        webAppWindow &&
-        !webAppWindow.closed
-      ) {
-
-        try {
-
-          webAppWindow.focus();
-
-        } catch (error) {
-
-          console.error(error);
-
-        }
-
-        return;
-
-      }
-
-
-      /*
-       * IMPORTANT:
-       *
-       * This is the CURRENT Version 22
-       * Apps Script Web App URL.
-       */
-      webAppWindow =
-        window.open(
-          WEB_APP_URL,
-          "PTBFRParticipantWindow"
-        );
-
-
-      if (!webAppWindow) {
-
-        setCameraStatus(
-          "Popup Web App diblokir browser. Izinkan pop-up untuk halaman ini.",
-          "warning"
-        );
-
-        return;
-
-      }
-
-
-      console.log(
-        "Web App window opened."
-      );
-
-    }
-
-
-    /*
-     * ============================================================
-     * SEND SCAN TO WEB APP
-     * ============================================================
-     */
-
-    function sendScanToWebApp(
-      scanValue
-    ) {
-
-      openWebAppWindow();
-
-
-      if (
-        !webAppWindow ||
-        webAppWindow.closed
-      ) {
-
-        setCameraStatus(
-          "Web App belum dapat dibuka.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      const message = {
-
-        type: "PTBFR_BIB_SCAN",
-
-        bib: scanValue
-
-      };
-
-
-      /*
-       * Send immediately.
-       */
-      try {
-
-        webAppWindow.postMessage(
-          message,
-          "*"
-        );
-
-        console.log(
-          "Message sent:",
-          message
-        );
-
-      } catch (error) {
-
-        console.error(
-          "postMessage error:",
-          error
-        );
-
-      }
-
-
-      /*
-       * Send again several times.
-       *
-       * This is intentional because the Apps Script
-       * page may still be loading when the QR is scanned.
-       */
-
-      clearTimeout(
-        sendRetryTimer
-      );
-
-
-      let attempts = 0;
-
-
-      function retrySend() {
-
-        attempts++;
-
-
-        if (
-          attempts > 10
-        ) {
-
-          return;
-
-        }
-
-
-        if (
-          !webAppWindow ||
-          webAppWindow.closed
-        ) {
-
-          return;
-
-        }
-
-
-        try {
-
-          webAppWindow.postMessage(
-            message,
-            "*"
-          );
-
-
-          console.log(
-            "Retry message:",
-            attempts,
-            message
-          );
-
-        } catch (error) {
-
-          console.error(error);
-
-        }
-
-
-        sendRetryTimer =
-          setTimeout(
-            retrySend,
-            500
-          );
-
-      }
-
-
-      sendRetryTimer =
-        setTimeout(
-          retrySend,
-          500
-        );
-
-    }
-
-
-    /*
-     * ============================================================
-     * HANDLE MESSAGE FROM WEB APP
-     * ============================================================
-     */
-
-    function handleWebAppMessage(
-      event
+    function onScanFailure(
+      errorMessage
     ) {
 
       /*
-       * Only accept messages from the
-       * official Apps Script / Google domains.
+       * Normal condition while
+       * camera is searching.
        *
-       * We intentionally do not hard-block
-       * because Apps Script may redirect
-       * between Google domains.
-       */
-
-      const origin =
-        event.origin || "";
-
-
-      console.log(
-        "Message received from:",
-        origin,
-        event.data
-      );
-
-
-      if (!event.data) {
-        return;
-      }
-
-
-      /*
-       * If Apps Script sends a participant result,
-       * we can display it here.
-       *
-       * Current architecture primarily lets
-       * Apps Script display the participant itself.
+       * Do not display errors.
        */
 
     }
@@ -1260,20 +1134,22 @@
      * ============================================================
      */
 
-    function handleSearchKey(event) {
+    function handleSearchKey(
+      event
+    ) {
 
       if (
         event.key === "Enter"
       ) {
 
-        searchParticipant();
+        manualSearch();
 
       }
 
     }
 
 
-    function searchParticipant() {
+    function manualSearch() {
 
       const input =
         document.getElementById(
@@ -1298,273 +1174,36 @@
 
 
       /*
-       * Open Apps Script Web App.
+       * Build Apps Script URL.
        */
-      openWebAppWindow();
 
-
-      /*
-       * Send exactly what the user typed.
-       */
-      sendScanToWebApp(
-        value
-      );
+      const targetUrl =
+        WEB_APP_URL +
+        "?q=" +
+        encodeURIComponent(
+          value
+        );
 
 
       setSearchStatus(
-        "Pencarian dikirim ke halaman participant.",
+        "Membuka data peserta...",
         "success"
       );
 
-    }
-
-
-    /*
-     * ============================================================
-     * LOCAL PARTICIPANT RESULT
-     * ============================================================
-     *
-     * These functions are kept here for compatibility
-     * and future integration.
-     */
-
-    function displayParticipant(
-      participant
-    ) {
-
-      if (!participant) {
-        return;
-      }
-
-
-      currentParticipant =
-        participant;
-
-
-      document.getElementById(
-        "participantName"
-      ).textContent =
-        participant.name || "-";
-
-
-      document.getElementById(
-        "participantBib"
-      ).textContent =
-        participant.bib || "-";
-
-
-      document.getElementById(
-        "participantId"
-      ).textContent =
-        participant.idNumber || "-";
-
-
-      document.getElementById(
-        "participantCategory"
-      ).textContent =
-        participant.category || "-";
-
-
-      document.getElementById(
-        "participantJersey"
-      ).textContent =
-        participant.jersey || "-";
-
-
-      document.getElementById(
-        "participantRegId"
-      ).textContent =
-        participant.regId || "-";
-
-
-      updateRacePackStatus(
-        participant
-      );
-
-
-      document.getElementById(
-        "result"
-      ).classList.add(
-        "show"
-      );
-
-    }
-
-
-    /*
-     * ============================================================
-     * RACE PACK STATUS
-     * ============================================================
-     */
-
-    function updateRacePackStatus(
-      participant
-    ) {
-
-      const status =
-        document.getElementById(
-          "racePackStatus"
-        );
-
-
-      const button =
-        document.getElementById(
-          "collectButton"
-        );
-
-
-      const racePack =
-        String(
-          participant.racePack || ""
-        ).trim()
-          .toLowerCase();
-
-
-      if (
-        racePack === "collected"
-      ) {
-
-        status.textContent =
-          "✅ RACE PACK SUDAH DIAMBIL";
-
-        status.className =
-          "race-pack collected";
-
-
-        button.disabled = true;
-
-        button.textContent =
-          "RACE PACK SUDAH DIAMBIL";
-
-        button.className =
-          "collect-button btn-secondary";
-
-      } else {
-
-        status.textContent =
-          "🎁 RACE PACK BELUM DIAMBIL";
-
-        status.className =
-          "race-pack available";
-
-
-        button.disabled = false;
-
-        button.textContent =
-          "✅ COLLECT RACE PACK";
-
-        button.className =
-          "collect-button btn-success";
-
-      }
-
-    }
-
-
-    /*
-     * ============================================================
-     * COLLECT RACE PACK
-     * ============================================================
-     */
-
-    function collectRacePack() {
-
-      if (!currentParticipant) {
-
-        return;
-
-      }
-
-
-      if (
-        !currentParticipant.rowNumber
-      ) {
-
-        setSearchStatus(
-          "Data peserta tidak memiliki row number.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      const button =
-        document.getElementById(
-          "collectButton"
-        );
-
-
-      button.disabled = true;
-
-      button.textContent =
-        "PROCESSING...";
-
 
       /*
-       * This function is only used if the participant
-       * result is integrated directly into this page.
-       *
-       * Current production flow uses the Apps Script
-       * page opened in the separate window.
+       * SAME TAB.
        */
 
-      setSearchStatus(
-        "Silakan lakukan collection pada halaman participant.",
-        "info"
-      );
+      window.location.href =
+        targetUrl;
 
     }
 
 
     /*
      * ============================================================
-     * RESET
-     * ============================================================
-     */
-
-    function resetResult() {
-
-      currentParticipant =
-        null;
-
-
-      document.getElementById(
-        "result"
-      ).classList.remove(
-        "show"
-      );
-
-
-      document.getElementById(
-        "searchInput"
-      ).value = "";
-
-
-      document.getElementById(
-        "scanValue"
-      ).classList.remove(
-        "show"
-      );
-
-
-      document.getElementById(
-        "scanValue"
-      ).textContent = "";
-
-
-      setSearchStatus(
-        "",
-        ""
-      );
-
-    }
-
-
-    /*
-     * ============================================================
-     * DISPLAY SCAN VALUE
+     * SHOW SCAN VALUE
      * ============================================================
      */
 
@@ -1579,7 +1218,8 @@
 
 
       element.textContent =
-        "QR Content: " + value;
+        "QR Content: " +
+        value;
 
 
       element.classList.add(
@@ -1591,7 +1231,7 @@
 
     /*
      * ============================================================
-     * STATUS HELPERS
+     * CAMERA STATUS
      * ============================================================
      */
 
@@ -1608,11 +1248,11 @@
 
       if (!message) {
 
-        element.className =
-          "status";
-
         element.textContent =
           "";
+
+        element.className =
+          "status";
 
         return;
 
@@ -1624,10 +1264,17 @@
 
 
       element.className =
-        "status show " + type;
+        "status show " +
+        type;
 
     }
 
+
+    /*
+     * ============================================================
+     * SEARCH STATUS
+     * ============================================================
+     */
 
     function setSearchStatus(
       message,
@@ -1642,11 +1289,11 @@
 
       if (!message) {
 
-        element.className =
-          "status";
-
         element.textContent =
           "";
+
+        element.className =
+          "status";
 
         return;
 
@@ -1658,35 +1305,46 @@
 
 
       element.className =
-        "status show " + type;
+        "status show " +
+        type;
 
     }
 
 
     /*
      * ============================================================
-     * UTILITY
+     * CAMERA PLACEHOLDER
      * ============================================================
      */
 
-    function sleep(
-      milliseconds
-    ) {
+    function showCameraPlaceholder() {
 
-      return new Promise(
-        function(resolve) {
+      const reader =
+        document.getElementById(
+          "reader"
+        );
 
-          setTimeout(
-            resolve,
-            milliseconds
-          );
 
-        }
-      );
+      reader.innerHTML = `
+
+        <div
+          id="cameraPlaceholder"
+          class="camera-placeholder"
+        >
+
+          Kamera belum aktif.<br>
+
+          Tekan tombol
+          <b>START CAMERA</b>.
+
+        </div>
+
+      `;
 
     }
 
   </script>
+
 
 </body>
 
