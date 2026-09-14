@@ -16,6 +16,7 @@
 
 
   <!-- QR SCANNER LIBRARY -->
+
   <script
     src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
   </script>
@@ -43,7 +44,6 @@
         sans-serif;
 
       background: #f5f7fa;
-
       color: #111827;
 
     }
@@ -696,24 +696,31 @@
 
   <script>
 
+
     /*
      * ============================================================
      * CONFIGURATION
      * ============================================================
      *
+     * Apps Script Web App.
+     *
      * IMPORTANT:
-     * This is the current Apps Script Web App.
      *
      * We DO NOT use window.open().
      *
      * We DO NOT use postMessage().
      *
-     * We simply navigate to:
+     * We DO NOT use URL hash (#5001).
      *
-     * /exec?q=5001
+     * We DO NOT use ?q=5001.
+     *
+     * We use:
+     *
+     * /exec?bib=5001
      *
      * ============================================================
      */
+
 
     const WEB_APP_URL =
       "https://script.google.com/macros/s/AKfycbzNmycrVEH4IpN97FYP_6BOaVKkMLgh560OcaVcv0zqqJH9rWMXqwzWN9GtI018zUR_/exec";
@@ -768,12 +775,10 @@
 
 
       /*
-       * IMPORTANT:
+       * No window.open().
        *
-       * There is NO window.open()
-       * here.
-       *
-       * The current page remains the scanner.
+       * Scanner tetap berada
+       * di halaman GitHub.
        */
 
       setCameraStatus(
@@ -793,7 +798,6 @@
         const config = {
 
           fps: 10,
-
 
           qrbox: function(
             viewfinderWidth,
@@ -825,7 +829,6 @@
 
 
           aspectRatio: 1.0,
-
 
           rememberLastUsedCamera: true
 
@@ -1001,9 +1004,15 @@
 
 
       /*
-       * Use the COMPLETE QR CONTENT.
+       * Use COMPLETE QR CONTENT.
        *
-       * DO NOT extract numbers only.
+       * Contoh:
+       *
+       * 5001
+       *
+       * I Gusti Made Dharma Putra Sesana
+       *
+       * PTBFR2026-0001
        */
 
       const scanValue =
@@ -1026,7 +1035,7 @@
 
 
       /*
-       * Display what was scanned.
+       * Display QR content.
        */
 
       showScanValue(
@@ -1064,23 +1073,30 @@
         .finally(
           function() {
 
+
             /*
-             * IMPORTANT:
+             * ====================================================
+             * IMPORTANT
+             * ====================================================
              *
-             * Encode the COMPLETE QR content.
+             * Gunakan parameter:
              *
-             * Examples:
+             * ?bib=
              *
-             * 5001
+             * BUKAN:
              *
-             * I Gusti Made Dharma Putra Sesana
+             * ?q=
              *
-             * PTBFR2026-0001
+             * BUKAN:
+             *
+             * #5001
+             *
+             * ====================================================
              */
 
             const targetUrl =
               WEB_APP_URL +
-              "?q=" +
+              "?bib=" +
               encodeURIComponent(
                 scanValue
               );
@@ -1093,10 +1109,9 @@
 
 
             /*
-             * SAME TAB.
+             * SAME TAB
              *
-             * No new tab.
-             * No popup.
+             * Tidak membuka tab baru.
              */
 
             window.location.href =
@@ -1119,10 +1134,10 @@
     ) {
 
       /*
-       * Normal condition while
-       * camera is searching.
+       * Normal condition ketika kamera
+       * sedang mencari QR.
        *
-       * Do not display errors.
+       * Jangan tampilkan error.
        */
 
     }
@@ -1174,12 +1189,14 @@
 
 
       /*
-       * Build Apps Script URL.
+       * ========================================================
+       * MANUAL SEARCH JUGA MENGGUNAKAN ?bib=
+       * ========================================================
        */
 
       const targetUrl =
         WEB_APP_URL +
-        "?q=" +
+        "?bib=" +
         encodeURIComponent(
           value
         );
@@ -1342,6 +1359,7 @@
       `;
 
     }
+
 
   </script>
 
