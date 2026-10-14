@@ -10,10 +10,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>
-    PTBFR 2026 - Race Pack Collection Scanner
-  </title>
-
+  <title>PTBRR 2027 - Race Pack Collection Scanner</title>
 
   <!-- QR SCANNER LIBRARY -->
 
@@ -149,72 +146,48 @@
        CAMERA
        ============================================================ */
 
-    #reader {
+    
+#reader {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #111827;
+  min-height: 0;
+}
 
-      width: 100%;
+#reader video {
+  width: 100% !important;
+  max-height: 320px;
+  object-fit: cover;
+  border-radius: 14px;
+}
 
-      overflow: hidden;
+#reader__dashboard {
+  color: white !important;
+}
 
-      border-radius: 14px;
+#reader__dashboard_section {
+  padding: 10px !important;
+}
 
-      background: #111827;
+#reader__dashboard_section_csr {
+  color: white !important;
+}
 
-      min-height: 260px;
+.camera-placeholder {
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #9ca3af;
+  padding: 20px;
+  font-size: 15px;
+  line-height: 1.6;
+}
 
-    }
-
-
-    #reader video {
-
-      width: 100% !important;
-
-      border-radius: 14px;
-
-    }
-
-
-    #reader__dashboard {
-
-      color: white !important;
-
-    }
-
-
-    #reader__dashboard_section {
-
-      padding: 10px !important;
-
-    }
-
-
-    #reader__dashboard_section_csr {
-
-      color: white !important;
-
-    }
-
-
-    .camera-placeholder {
-
-      min-height: 260px;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      text-align: center;
-
-      color: #9ca3af;
-
-      padding: 30px;
-
-      font-size: 15px;
-
-      line-height: 1.6;
-
-    }
 
 
     /* ============================================================
@@ -544,14 +517,10 @@
     <div class="header">
 
       <h1>
-        PTBFR 2026
-      </h1>
-
-      <p>
-        Race Pack Collection Scanner
-      </p>
-
-    </div>
+       <div class="header">
+  <h1>PTBRR 2027</h1>
+  <p>Race Pack Collection Scanner</p>
+</div>
 
 
     <!-- ==========================================================
@@ -681,19 +650,10 @@
          ========================================================== -->
 
     <div class="footer">
-
-      Pangkung Tibah Beach Fun Run 2026
-
-      <br>
-
-      BeLong Project
-
-    </div>
-
-
-  </div>
-
-
+  PTBRR 2027
+  <br>
+  BeLong Project
+</div>
   <script>
 
 
