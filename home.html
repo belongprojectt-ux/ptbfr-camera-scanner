@@ -1,68 +1,97 @@
-    
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#081b2b">
-  <title>Pangkung Tibah Beach Race Run 2027</title>
+
+  <title>Pangkung Tibah Beach Run 2027 | PTBRR</title>
+  <meta name="description" content="Pangkung Tibah Beach Run 2027. 15,7 KM All Open. 3 Januari 2027, Pantai Pangkung Tibah, Tabanan, Bali.">
 
   <style>
+    :root {
+      --navy: #081b2b;
+      --navy-light: #102d40;
+      --green: #b9f36a;
+      --cream: #f5f7f2;
+      --white: #ffffff;
+      --muted: #617180;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: Arial, Helvetica, sans-serif;
-      background: #081b2b;
-      color: #fff;
+      background: var(--cream);
+      color: var(--navy);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .container {
+      width: min(1120px, 88%);
+      margin: 0 auto;
     }
 
     header {
-      min-height: 78px;
-      padding: 18px 7%;
+      background: var(--navy);
+      color: var(--white);
+      padding: 18px 0;
+    }
+
+    .nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      background: #081b2b;
+      gap: 18px;
     }
 
     .brand {
-      font-size: 17px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
+      font-weight: 900;
+      font-size: 19px;
+      letter-spacing: 1px;
+      white-space: nowrap;
     }
 
     .brand span {
-      color: #b9f36a;
+      color: var(--green);
     }
 
-    .header-label {
-      font-size: 12px;
-      letter-spacing: 2px;
-      color: #d9e5ee;
+    .nav-note {
+      font-size: 11px;
+      letter-spacing: 1.6px;
+      color: #d7e2e9;
+      text-align: right;
     }
 
     .hero {
-      min-height: 690px;
-      padding: 100px 7% 85px;
+      min-height: 620px;
+      padding: 90px 0;
       display: flex;
       align-items: center;
-      position: relative;
-      overflow: hidden;
-      background-image:
+      color: var(--white);
+      background:
         linear-gradient(
           90deg,
-          rgba(5, 19, 31, 0.88) 0%,
-          rgba(5, 19, 31, 0.62) 48%,
-          rgba(5, 19, 31, 0.18) 100%
+          rgba(5, 19, 31, .88),
+          rgba(5, 19, 31, .60) 57%,
+          rgba(5, 19, 31, .20)
         ),
         linear-gradient(
           0deg,
-          rgba(5, 19, 31, 0.48),
+          rgba(5, 19, 31, .45),
           transparent 55%
         ),
         url("https://ak-d.tripcdn.com/images/1i6722224shligmw2D7AC.jpg?proc=source%2Ftrip");
@@ -72,254 +101,843 @@
 
     .hero-content {
       max-width: 780px;
-      position: relative;
-      z-index: 1;
     }
 
     .eyebrow {
       display: inline-block;
-      border: 1px solid rgba(185, 243, 106, 0.8);
-      color: #d4ff9b;
-      padding: 10px 16px;
+      color: #d9ffa9;
+      border: 1px solid rgba(185, 243, 106, .8);
+      padding: 8px 15px;
       border-radius: 30px;
-      font-size: 12px;
-      font-weight: bold;
+      font-size: 11px;
+      font-weight: 800;
       letter-spacing: 2px;
-      margin-bottom: 27px;
+      margin-bottom: 24px;
     }
 
     h1 {
-      font-size: clamp(42px, 7vw, 82px);
-      line-height: 1.04;
+      font-size: clamp(44px, 7vw, 82px);
+      line-height: 1.02;
       letter-spacing: -2px;
       font-weight: 900;
-      margin-bottom: 24px;
-      text-transform: uppercase;
+      margin-bottom: 22px;
     }
 
     h1 span {
-      color: #b9f36a;
+      color: var(--green);
     }
 
-    .intro {
-      max-width: 590px;
-      color: #f0f4f7;
+    .hero-description {
+      max-width: 600px;
+      color: #edf2f5;
       font-size: 17px;
-      line-height: 1.8;
-      margin-bottom: 32px;
+      margin-bottom: 26px;
     }
 
-    .event-info {
+    .hero-facts {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-bottom: 35px;
+      margin-bottom: 30px;
     }
 
-    .info-item {
-      padding: 14px 17px;
-      background: rgba(7, 25, 39, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.23);
+    .fact {
+      background: rgba(7, 25, 39, .72);
+      border: 1px solid rgba(255, 255, 255, .23);
+      padding: 13px 17px;
       border-radius: 10px;
-      backdrop-filter: blur(5px);
     }
 
-    .info-label {
-      color: #b9f36a;
+    .fact-label {
+      color: var(--green);
       font-size: 10px;
-      font-weight: bold;
       letter-spacing: 1.5px;
-      margin-bottom: 7px;
+      font-weight: 800;
+      margin-bottom: 4px;
     }
 
-    .info-value {
+    .fact-value {
       font-size: 14px;
       font-weight: 700;
-      line-height: 1.5;
     }
 
-    .register-btn {
-      display: inline-block;
-      padding: 17px 30px;
-      background: #b9f36a;
-      color: #102417;
-      text-decoration: none;
-      font-weight: 900;
-      font-size: 13px;
-      letter-spacing: 1.5px;
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 14px 21px;
       border-radius: 5px;
-      transition: transform 0.2s, background 0.2s;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .8px;
+      text-align: center;
+      transition: transform .2s, background .2s;
     }
 
-    .register-btn:hover {
-      background: #d0ff96;
+    .btn:hover {
       transform: translateY(-2px);
     }
 
-    .note {
-      margin-top: 17px;
-      font-size: 12px;
-      color: #e4e9ed;
+    .btn-primary {
+      background: var(--green);
+      color: #102417;
     }
 
-    .bottom-strip {
-      padding: 27px 7%;
+    .btn-primary:hover {
+      background: #d0ff96;
+    }
+
+    .btn-outline {
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, .8);
+      background: rgba(8, 27, 43, .35);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, .12);
+    }
+
+    .hero-note {
+      margin-top: 15px;
+      font-size: 11px;
+      color: #e2e9ee;
+    }
+
+    section.content-section {
+      padding: 76px 0;
+    }
+
+    .section-heading {
+      max-width: 680px;
+      margin-bottom: 30px;
+    }
+
+    .section-kicker {
+      color: #587e2c;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      color: var(--navy);
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.15;
+      margin-bottom: 12px;
+      letter-spacing: -.8px;
+    }
+
+    .section-description {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .section-dark {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .section-dark h2 {
+      color: var(--white);
+    }
+
+    .section-dark .section-description {
+      color: #c7d3dc;
+    }
+
+    .section-dark .section-kicker {
+      color: var(--green);
+    }
+
+    .category-card {
+      background: var(--navy);
+      color: var(--white);
+      padding: 32px;
+      border-radius: 14px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 15px;
-      background: #f5f7f2;
-      color: #102638;
+      justify-content: space-between;
+      gap: 24px;
     }
 
-    .bottom-strip strong {
-      font-size: 14px;
-      letter-spacing: 1px;
+    .category-distance {
+      color: var(--green);
+      font-size: clamp(40px, 6vw, 66px);
+      line-height: 1;
+      font-weight: 900;
     }
 
-    .bottom-strip span {
+    .category-label {
+      font-size: 15px;
+      font-weight: 800;
+      margin-top: 10px;
+    }
+
+    .category-tag {
+      display: inline-block;
+      padding: 9px 14px;
+      background: rgba(185, 243, 106, .12);
+      border: 1px solid rgba(185, 243, 106, .5);
+      color: #d8ffa8;
+      border-radius: 30px;
       font-size: 12px;
-      color: #526271;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .route-card {
+      padding: 30px;
+      background: var(--white);
+      border: 1px solid #e1e8e0;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+    }
+
+    .route-icon {
+      width: 54px;
+      height: 54px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      background: #edf5e3;
+      color: #355a1b;
+      border-radius: 12px;
+      font-size: 25px;
+      margin-bottom: 14px;
+    }
+
+    .route-card h3 {
+      font-size: 21px;
+      margin-bottom: 7px;
+    }
+
+    .route-card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .route-card .btn {
+      flex-shrink: 0;
+    }
+
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .price-card {
+      background: var(--white);
+      border: 1px solid #e1e8e0;
+      border-radius: 14px;
+      padding: 26px 22px;
+      display: flex;
+      flex-direction: column;
+      min-height: 220px;
+    }
+
+    .price-card.featured {
+      border: 2px solid #8dbd4b;
+      box-shadow: 0 8px 28px rgba(27, 61, 23, .07);
+    }
+
+    .price-period {
+      color: #587e2c;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .price-amount {
+      font-size: clamp(25px, 3vw, 34px);
+      font-weight: 900;
+      margin: 13px 0 8px;
+      letter-spacing: -1px;
+    }
+
+    .price-date {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: auto;
+      padding-top: 15px;
+    }
+
+    .price-note {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 20px;
+    }
+
+    .prize-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .prize-card {
+      border: 1px solid rgba(255, 255, 255, .16);
+      background: rgba(255, 255, 255, .05);
+      border-radius: 14px;
+      padding: 27px 16px;
+      text-align: center;
+    }
+
+    .prize-place {
+      color: #d3e0e7;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+    }
+
+    .prize-amount {
+      color: var(--green);
+      font-size: clamp(24px, 3.5vw, 38px);
+      font-weight: 900;
+      margin-top: 12px;
+      line-height: 1.2;
+    }
+
+    .prize-caption {
+      color: #d0dce4;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .benefit-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .benefit-card {
+      padding: 26px 20px;
+      background: var(--white);
+      border: 1px solid #e1e8e0;
+      border-radius: 13px;
+      text-align: center;
+    }
+
+    .benefit-icon {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .benefit-card h3 {
+      font-size: 17px;
+    }
+
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .food-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      padding: 16px;
+      background: var(--white);
+      border: 1px solid #e1e8e0;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .food-check {
+      color: #54812a;
+      font-weight: 900;
+    }
+
+    .video-placeholder {
+      min-height: 220px;
+      background:
+        linear-gradient(135deg, #12344a, #081b2b);
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .video-placeholder .play {
+      font-size: 42px;
+      color: var(--green);
+      margin-bottom: 10px;
+    }
+
+    .video-placeholder h3 {
+      font-size: 21px;
+      margin-bottom: 6px;
+    }
+
+    .video-placeholder p {
+      color: #c7d3dc;
+      font-size: 13px;
+    }
+
+    .final-cta {
+      text-align: center;
+      padding: 76px 0;
+      background: #eaf1e2;
+    }
+
+    .final-cta h2 {
+      max-width: 700px;
+      margin: 0 auto 15px;
+    }
+
+    .final-cta p {
+      color: var(--muted);
+      margin-bottom: 25px;
     }
 
     footer {
-      background: #081b2b;
-      color: #aebdc8;
+      background: var(--navy);
+      color: #b7c5cf;
       text-align: center;
-      padding: 23px 15px;
-      font-size: 11px;
-      line-height: 1.8;
+      padding: 28px 6%;
+      font-size: 12px;
+      line-height: 1.9;
     }
 
-    @media (max-width: 600px) {
-      header {
-        min-height: 68px;
-        padding: 17px 6%;
-      }
+    footer strong {
+      color: var(--white);
+      letter-spacing: 1px;
+    }
 
-      .brand {
-        font-size: 13px;
-      }
-
-      .header-label {
-        font-size: 9px;
-        letter-spacing: 1px;
+    @media (max-width: 760px) {
+      .container {
+        width: 90%;
       }
 
       .hero {
-        min-height: 720px;
-        padding: 75px 6% 65px;
+        min-height: 680px;
+        padding: 70px 0;
         background-position: 57% center;
-        background-image:
-          linear-gradient(
-            90deg,
-            rgba(5, 19, 31, 0.82),
-            rgba(5, 19, 31, 0.52)
-          ),
-          linear-gradient(
-            0deg,
-            rgba(5, 19, 31, 0.55),
-            transparent
-          ),
-          url("https://ak-d.tripcdn.com/images/1i6722224shligmw2D7AC.jpg?proc=source%2Ftrip");
+      }
+
+      .nav-note {
+        font-size: 9px;
+        letter-spacing: .8px;
+      }
+
+      .brand {
+        font-size: 15px;
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .button-row {
+        flex-direction: column;
+      }
+
+      .button-row .btn {
+        width: 100%;
+      }
+
+      section.content-section {
+        padding: 56px 0;
+      }
+
+      .price-grid,
+      .prize-grid,
+      .benefit-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .price-card {
+        min-height: auto;
+      }
+
+      .price-date {
+        padding-top: 8px;
+      }
+
+      .category-card {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 25px;
+      }
+
+      .route-card {
+        align-items: stretch;
+        flex-direction: column;
+        padding: 23px;
+      }
+
+      .route-card .btn {
+        width: 100%;
+      }
+
+      .food-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+      }
+
+      .food-item {
+        padding: 12px;
+        font-size: 12px;
+      }
+
+      .prize-card {
+        padding: 23px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .food-grid {
+        grid-template-columns: 1fr;
       }
 
       h1 {
-        font-size: clamp(39px, 11vw, 58px);
-        letter-spacing: -1px;
+        font-size: 39px;
       }
 
-      .intro {
-        font-size: 15px;
-        line-height: 1.7;
-      }
-
-      .event-info {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-
-      .info-item {
-        padding: 12px 15px;
-      }
-
-      .register-btn {
+      .fact {
         width: 100%;
-        text-align: center;
-        padding: 17px 12px;
-      }
-
-      .bottom-strip {
-        padding: 24px 6%;
       }
     }
   </style>
 </head>
 
 <body>
+
   <header>
-    <div class="brand"> <span>2027</span></div>
-    <div class="header-label">RUN · EXPLORE · EXPERIENCE</div>
+    <div class="container nav">
+      <div class="brand">PTBRR <span>2027</span></div>
+      <div class="nav-note">RUN · EXPLORE · EXPERIENCE</div>
+    </div>
   </header>
 
+  <!-- HERO -->
   <main>
     <section class="hero">
-      <div class="hero-content">
-        <div class="eyebrow">YOUR NEXT RUNNING STORY</div>
+      <div class="container">
+        <div class="hero-content">
+          <div class="eyebrow">YOUR NEXT RUNNING STORY</div>
 
-        <h1>
-          RUN BY<br>
-          THE <span>BEACH.</span>
-        </h1>
+          <h1>
+            RUN BY<br>
+            THE <span>BEACH.</span>
+          </h1>
 
-        <p class="intro">
-          Experience the beauty of Bali's coastline.
-          Join us for a memorable running experience
-          at Pantai Pangkung Tibah, Tabanan, Bali.
-          Every step tells a story.
-        </p>
+          <p class="hero-description">
+            One coastline. One challenge. Every step tells a story.
+            Join Pangkung Tibah Beach Run 2027 and experience
+            the beauty of Bali through a memorable running journey.
+          </p>
 
-        <div class="event-info">
-          <div class="info-item">
-            <div class="info-label">EVENT DATE</div>
-            <div class="info-value">03 January 2027</div>
-          </div>
+          <div class="hero-facts">
+            <div class="fact">
+              <div class="fact-label">EVENT DATE</div>
+              <div class="fact-value">03 January 2027</div>
+            </div>
 
-          <div class="info-item">
-            <div class="info-label">LOCATION</div>
-            <div class="info-value">
-              Pantai Pangkung Tibah<br>
-              Tabanan, Bali
+            <div class="fact">
+              <div class="fact-label">LOCATION</div>
+              <div class="fact-value">
+                Pantai Pangkung Tibah<br>
+                Tabanan, Bali
+              </div>
+            </div>
+
+            <div class="fact">
+              <div class="fact-label">RACE CATEGORY</div>
+              <div class="fact-value">15.7 KM · All Open</div>
             </div>
           </div>
+
+          <div class="button-row">
+            <a
+              class="btn btn-primary"
+              href="https://script.google.com/macros/s/AKfycbxVft1-IBL4soNTD_HJTzR7r6ly1fDZsHB1hIjjQM3KMpIdTkUMcmZOMa5IYDD5ygsk/exec?page=registration"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              REGISTER NOW →
+            </a>
+
+            <a
+              class="btn btn-outline"
+              href="https://script.google.com/macros/s/AKfycbxVft1-IBL4soNTD_HJTzR7r6ly1fDZsHB1hIjjQM3KMpIdTkUMcmZOMa5IYDD5ygsk/exec?page=alumni"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              REGISTER ALUMNI PTBFR 2026
+            </a>
+          </div>
+
+          <p class="hero-note">
+            Explore the route, race information, prizes and runner benefits below.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATEGORY -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">THE CHALLENGE</div>
+          <h2>One Distance. Every Runner.</h2>
+          <p class="section-description">
+            Take on the 15.7 KM course along the Pangkung Tibah area.
+          </p>
         </div>
 
-        <a
-          class="register-btn"
-          href="https://script.google.com/macros/s/AKfycbxVft1-IBL4soNTD_HJTzR7r6ly1fDZsHB1hIjjQM3KMpIdTkUMcmZOMa5IYDD5ygsk/exec?page=registration"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          REGISTER NOW &nbsp; →
-        </a>
+        <div class="category-card">
+          <div>
+            <div class="category-distance">15.7 KM</div>
+            <div class="category-label">Pangkung Tibah Beach Run 2027</div>
+          </div>
+          <div class="category-tag">ALL OPEN</div>
+        </div>
+      </div>
+    </section>
 
-        <p class="note">
-          More event information will be announced soon.
+    <!-- ROUTE -->
+    <section class="content-section" style="background:#eef2e9;">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">FIND YOUR WAY</div>
+          <h2>The Race Route</h2>
+          <p class="section-description">
+            Explore the course location using Google Earth before race day.
+          </p>
+        </div>
+
+        <div class="route-card">
+          <div>
+            <div class="route-icon">⌖</div>
+            <h3>Pangkung Tibah, Tabanan</h3>
+            <p>
+              View the location and route reference in Google Earth.
+              Check the latest official route information before the event.
+            </p>
+          </div>
+
+          <a
+            class="btn btn-primary"
+            href="https://earth.google.com/web/@-8.58855641,115.07597857,10.80153472a,429301.74851491d,30.14179369y,0h,0t,0r/data=CgRCAggBMikKJwolCiExV3Q0MEFCQXBiQkdRdG5nalhIMlFMRy0ycU1nNktMZE4gAToDCgEwQgIIAEoICKTLiNsCEAE"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            VIEW ROUTE ↗
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TICKET PRICES -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">REGISTRATION</div>
+          <h2>Choose Your Registration Period</h2>
+          <p class="section-description">
+            Registration prices for the 15.7 KM All Open category.
+          </p>
+        </div>
+
+        <div class="price-grid">
+          <article class="price-card featured">
+            <div class="price-period">Early Bird</div>
+            <div class="price-amount">Rp450.000</div>
+            <div class="price-date">1 November – 1 December 2026</div>
+          </article>
+
+          <article class="price-card">
+            <div class="price-period">Regular</div>
+            <div class="price-amount">Rp500.000</div>
+            <div class="price-date">1 December – 20 December 2026</div>
+          </article>
+
+          <article class="price-card">
+            <div class="price-period">Last Call</div>
+            <div class="price-amount">Rp550.000</div>
+            <div class="price-date">21 December – 31 December 2026</div>
+          </article>
+        </div>
+
+        <p class="price-note">
+          Please refer to the official registration form for registration
+          availability and payment instructions.
         </p>
       </div>
     </section>
 
-    <section class="bottom-strip">
-      <strong>EVERY STEP TELLS A STORY.</strong>
-      <span>Pangkung Tibah, Tabanan, Bali · 2027</span>
+    <!-- CASH PODIUM -->
+    <section class="content-section section-dark">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">THE REWARD</div>
+          <h2>Cash Podium</h2>
+          <p class="section-description">
+            Run strong. Challenge yourself. Make every step count.
+          </p>
+        </div>
+
+        <div class="prize-grid">
+          <article class="prize-card">
+            <div class="prize-place">1st Place</div>
+            <div class="prize-amount">Rp5.000.000</div>
+            <div class="prize-caption">Cash Prize</div>
+          </article>
+
+          <article class="prize-card">
+            <div class="prize-place">2nd Place</div>
+            <div class="prize-amount">Rp3.000.000</div>
+            <div class="prize-caption">Cash Prize</div>
+          </article>
+
+          <article class="prize-card">
+            <div class="prize-place">3rd Place</div>
+            <div class="prize-amount">Rp1.500.000</div>
+            <div class="prize-caption">Cash Prize</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- RACE PACK -->
+    <section class="content-section">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">YOUR RACE ESSENTIALS</div>
+          <h2>Every Runner Gets</h2>
+          <p class="section-description">
+            Race essentials prepared for your running experience.
+          </p>
+        </div>
+
+        <div class="benefit-grid">
+          <article class="benefit-card">
+            <div class="benefit-icon">👕</div>
+            <h3>Event Jersey</h3>
+          </article>
+
+          <article class="benefit-card">
+            <div class="benefit-icon">🏅</div>
+            <h3>Finisher Medal</h3>
+          </article>
+
+          <article class="benefit-card">
+            <div class="benefit-icon">🎽</div>
+            <h3>Race BIB</h3>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- FREE FLOW -->
+    <section class="content-section" style="background:#eef2e9;">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">REFUEL & ENJOY</div>
+          <h2>Free-Flow Refreshments</h2>
+          <p class="section-description">
+            Enjoy a selection of drinks, traditional snacks and fresh fruit.
+          </p>
+        </div>
+
+        <div class="food-grid">
+          <div class="food-item"><span class="food-check">✓</span><span>Air Mineral</span></div>
+          <div class="food-item"><span class="food-check">✓</span><span>Kopi</span></div>
+          <div class="food-item"><span class="food-check">✓</span><span>Teh</span></div>
+          <div class="food-item"><span class="food-check">✓</span><span>Jajanan Pasar</span></div>
+          <div class="food-item"><span class="food-check">✓</span><span>Pisang Rebus</span></div>
+          <div class="food-item"><span class="food-check">✓</span><span>Jagung Rebus</span></div>
+          <div class="food-item"><span class="food-check">✓</span><span>Kacang</span></div>
+          <div class="food-item"><span class="food-check">✓</span><span>Kedelai</span></div>
+          <div class="food-item"><span class="food-check">✓</span><span>Nasi Jinggo</span></div>
+          <div class="food-item"><span class="food-check">✓</span><span>Buah Semangka</span></div>
+          <div class="food-item"><span class="food-check">✓</span><span>Pisang Segar</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIDEO PLACEHOLDER -->
+    <section class="content-section section-dark">
+      <div class="container">
+        <div class="section-heading">
+          <div class="section-kicker">FEEL THE EXPERIENCE</div>
+          <h2>See You at the Beach</h2>
+          <p class="section-description">
+            Get ready to run, explore and experience Pangkung Tibah.
+          </p>
+        </div>
+
+        <div class="video-placeholder">
+          <div>
+            <div class="play">▶</div>
+            <h3>PTBRR 2027 Event Video</h3>
+            <p>
+              Event video coming soon. Stay tuned for more updates.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+      <div class="container">
+        <div class="section-kicker">YOUR NEXT CHAPTER STARTS HERE</div>
+        <h2>Every Step Tells a Story.</h2>
+        <p>
+          Be part of Pangkung Tibah Beach Run 2027.
+          See you on 3 January 2027.
+        </p>
+
+        <div class="button-row" style="justify-content:center;">
+          <a
+            class="btn btn-primary"
+            href="https://script.google.com/macros/s/AKfycbxVft1-IBL4soNTD_HJTzR7r6ly1fDZsHB1hIjjQM3KMpIdTkUMcmZOMa5IYDD5ygsk/exec?page=registration"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            REGISTER NOW →
+          </a>
+
+          <a
+            class="btn"
+            style="background:#081b2b;color:#fff;"
+            href="https://script.google.com/macros/s/AKfycbxVft1-IBL4soNTD_HJTzR7r6ly1fDZsHB1hIjjQM3KMpIdTkUMcmZOMa5IYDD5ygsk/exec?page=alumni"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            REGISTER ALUMNI PTBFR 2026
+          </a>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer>
-    PANGKUNG TIBAH BEACH RACE RUN 2027<br>
-    RUN. EXPLORE. EXPERIENCE.
+    <strong>PANGKUNG TIBAH BEACH RUN 2027</strong><br>
+    PTBRR · RUN. EXPLORE. EXPERIENCE.<br>
+    Pantai Pangkung Tibah, Tabanan, Bali
   </footer>
+
 </body>
 </html>
