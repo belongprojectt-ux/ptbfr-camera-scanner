@@ -5,14 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#081b2b">
-
   <title>Pangkung Tibah Beach Run 2027 | PTBRR</title>
-  <meta name="description" content="Pangkung Tibah Beach Run 2027. 15,7 KM All Open. 3 Januari 2027, Pantai Pangkung Tibah, Tabanan, Bali.">
+  <meta name="description" content="Pangkung Tibah Beach Run 2027 — 15.7 KM All Open, 3 Januari 2027, Pantai Pangkung Tibah, Tabanan, Bali.">
 
   <style>
     :root {
       --navy: #081b2b;
-      --navy-light: #102d40;
+      --navy-light: #12344a;
       --green: #b9f36a;
       --cream: #f5f7f2;
       --white: #ffffff;
@@ -41,7 +40,7 @@
     }
 
     .container {
-      width: min(1120px, 88%);
+      width: min(1120px, 90%);
       margin: 0 auto;
     }
 
@@ -55,12 +54,12 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
+      gap: 16px;
     }
 
     .brand {
-      font-weight: 900;
       font-size: 19px;
+      font-weight: 900;
       letter-spacing: 1px;
       white-space: nowrap;
     }
@@ -71,13 +70,13 @@
 
     .nav-note {
       font-size: 11px;
-      letter-spacing: 1.6px;
+      letter-spacing: 1.5px;
       color: #d7e2e9;
       text-align: right;
     }
 
     .hero {
-      min-height: 620px;
+      min-height: 640px;
       padding: 90px 0;
       display: flex;
       align-items: center;
@@ -100,7 +99,7 @@
     }
 
     .hero-content {
-      max-width: 780px;
+      max-width: 790px;
     }
 
     .eyebrow {
@@ -116,8 +115,8 @@
     }
 
     h1 {
-      font-size: clamp(44px, 7vw, 82px);
-      line-height: 1.02;
+      font-size: clamp(43px, 7vw, 82px);
+      line-height: 1.04;
       letter-spacing: -2px;
       font-weight: 900;
       margin-bottom: 22px;
@@ -128,10 +127,10 @@
     }
 
     .hero-description {
-      max-width: 600px;
+      max-width: 610px;
       color: #edf2f5;
       font-size: 17px;
-      margin-bottom: 26px;
+      margin-bottom: 27px;
     }
 
     .hero-facts {
@@ -177,7 +176,7 @@
       text-decoration: none;
       font-size: 12px;
       font-weight: 900;
-      letter-spacing: .8px;
+      letter-spacing: .6px;
       text-align: center;
       transition: transform .2s, background .2s;
     }
@@ -211,12 +210,12 @@
       color: #e2e9ee;
     }
 
-    section.content-section {
+    .content-section {
       padding: 76px 0;
     }
 
     .section-heading {
-      max-width: 680px;
+      max-width: 700px;
       margin-bottom: 30px;
     }
 
@@ -272,7 +271,7 @@
 
     .category-distance {
       color: var(--green);
-      font-size: clamp(40px, 6vw, 66px);
+      font-size: clamp(42px, 6vw, 66px);
       line-height: 1;
       font-weight: 900;
     }
@@ -295,6 +294,10 @@
       white-space: nowrap;
     }
 
+    .route-section {
+      background: #eef2e9;
+    }
+
     .route-card {
       padding: 30px;
       background: var(--white);
@@ -309,13 +312,12 @@
     .route-icon {
       width: 54px;
       height: 54px;
-      flex-shrink: 0;
       display: grid;
       place-items: center;
       background: #edf5e3;
       color: #355a1b;
       border-radius: 12px;
-      font-size: 25px;
+      font-size: 26px;
       margin-bottom: 14px;
     }
 
@@ -441,33 +443,40 @@
       font-size: 17px;
     }
 
-    .food-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .food-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 11px;
-      padding: 16px;
+    .refreshment-card {
+      padding: 34px;
       background: var(--white);
       border: 1px solid #e1e8e0;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 700;
+      border-radius: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 22px;
     }
 
-    .food-check {
-      color: #54812a;
-      font-weight: 900;
+    .refreshment-icon {
+      width: 58px;
+      height: 58px;
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      background: #edf5e3;
+      border-radius: 14px;
+      font-size: 28px;
+    }
+
+    .refreshment-card h3 {
+      font-size: 22px;
+      margin-bottom: 9px;
+    }
+
+    .refreshment-card p {
+      color: var(--muted);
+      font-size: 15px;
     }
 
     .video-placeholder {
-      min-height: 220px;
-      background:
-        linear-gradient(135deg, #12344a, #081b2b);
+      min-height: 240px;
+      background: linear-gradient(135deg, #12344a, #081b2b);
       border: 1px solid rgba(255, 255, 255, .12);
       border-radius: 14px;
       display: flex;
@@ -477,7 +486,7 @@
       padding: 30px;
     }
 
-    .video-placeholder .play {
+    .video-play {
       font-size: 42px;
       color: var(--green);
       margin-bottom: 10px;
@@ -509,6 +518,15 @@
       margin-bottom: 25px;
     }
 
+    .final-cta .button-row {
+      justify-content: center;
+    }
+
+    .btn-dark {
+      background: var(--navy);
+      color: var(--white);
+    }
+
     footer {
       background: var(--navy);
       color: #b7c5cf;
@@ -524,23 +542,19 @@
     }
 
     @media (max-width: 760px) {
-      .container {
-        width: 90%;
+      .nav-note {
+        font-size: 9px;
+        letter-spacing: .7px;
+      }
+
+      .brand {
+        font-size: 15px;
       }
 
       .hero {
         min-height: 680px;
         padding: 70px 0;
         background-position: 57% center;
-      }
-
-      .nav-note {
-        font-size: 9px;
-        letter-spacing: .8px;
-      }
-
-      .brand {
-        font-size: 15px;
       }
 
       .hero-description {
@@ -555,7 +569,7 @@
         width: 100%;
       }
 
-      section.content-section {
+      .content-section {
         padding: 56px 0;
       }
 
@@ -589,32 +603,35 @@
         width: 100%;
       }
 
-      .food-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 9px;
+      .refreshment-card {
+        flex-direction: column;
+        padding: 24px;
       }
 
-      .food-item {
-        padding: 12px;
-        font-size: 12px;
-      }
-
-      .prize-card {
-        padding: 23px;
+      .video-placeholder {
+        min-height: 210px;
       }
     }
 
     @media (max-width: 380px) {
-      .food-grid {
-        grid-template-columns: 1fr;
-      }
-
       h1 {
         font-size: 39px;
       }
 
       .fact {
         width: 100%;
+      }
+
+      .hero-facts {
+        gap: 9px;
+      }
+
+      .nav-note {
+        max-width: 115px;
+      }
+
+      .refreshment-card h3 {
+        font-size: 20px;
       }
     }
   </style>
@@ -629,8 +646,8 @@
     </div>
   </header>
 
-  <!-- HERO -->
   <main>
+    <!-- HERO -->
     <section class="hero">
       <div class="container">
         <div class="hero-content">
@@ -701,7 +718,7 @@
           <div class="section-kicker">THE CHALLENGE</div>
           <h2>One Distance. Every Runner.</h2>
           <p class="section-description">
-            Take on the 15.7 KM course along the Pangkung Tibah area.
+            Take on the 15.7 KM course around the Pangkung Tibah area.
           </p>
         </div>
 
@@ -716,13 +733,13 @@
     </section>
 
     <!-- ROUTE -->
-    <section class="content-section" style="background:#eef2e9;">
+    <section class="content-section route-section">
       <div class="container">
         <div class="section-heading">
           <div class="section-kicker">FIND YOUR WAY</div>
           <h2>The Race Route</h2>
           <p class="section-description">
-            Explore the course location using Google Earth before race day.
+            Explore the route reference and location in Google Earth.
           </p>
         </div>
 
@@ -731,8 +748,8 @@
             <div class="route-icon">⌖</div>
             <h3>Pangkung Tibah, Tabanan</h3>
             <p>
-              View the location and route reference in Google Earth.
-              Check the latest official route information before the event.
+              View the Google Earth route reference and check the latest
+              official route information before race day.
             </p>
           </div>
 
@@ -769,7 +786,7 @@
           <article class="price-card">
             <div class="price-period">Regular</div>
             <div class="price-amount">Rp500.000</div>
-            <div class="price-date">1 December – 20 December 2026</div>
+            <div class="price-date">2 December – 20 December 2026</div>
           </article>
 
           <article class="price-card">
@@ -849,29 +866,27 @@
       </div>
     </section>
 
-    <!-- FREE FLOW -->
-    <section class="content-section" style="background:#eef2e9;">
+    <!-- FREE-FLOW REFRESHMENT -->
+    <section class="content-section route-section">
       <div class="container">
         <div class="section-heading">
           <div class="section-kicker">REFUEL & ENJOY</div>
-          <h2>Free-Flow Refreshments</h2>
+          <h2>Free-Flow Refreshment</h2>
           <p class="section-description">
-            Enjoy a selection of drinks, traditional snacks and fresh fruit.
+            A refreshing part of your race-day experience.
           </p>
         </div>
 
-        <div class="food-grid">
-          <div class="food-item"><span class="food-check">✓</span><span>Air Mineral</span></div>
-          <div class="food-item"><span class="food-check">✓</span><span>Kopi</span></div>
-          <div class="food-item"><span class="food-check">✓</span><span>Teh</span></div>
-          <div class="food-item"><span class="food-check">✓</span><span>Jajanan Pasar</span></div>
-          <div class="food-item"><span class="food-check">✓</span><span>Pisang Rebus</span></div>
-          <div class="food-item"><span class="food-check">✓</span><span>Jagung Rebus</span></div>
-          <div class="food-item"><span class="food-check">✓</span><span>Kacang</span></div>
-          <div class="food-item"><span class="food-check">✓</span><span>Kedelai</span></div>
-          <div class="food-item"><span class="food-check">✓</span><span>Nasi Jinggo</span></div>
-          <div class="food-item"><span class="food-check">✓</span><span>Buah Semangka</span></div>
-          <div class="food-item"><span class="food-check">✓</span><span>Pisang Segar</span></div>
+        <div class="refreshment-card">
+          <div class="refreshment-icon">☕</div>
+          <div>
+            <h3>Sajian Gratis & Kuliner UMKM Lokal</h3>
+            <p>
+              Nikmati beragam sajian dan minuman gratis, dengan pilihan
+              kuliner UMKM lokal, jajanan tradisional, dan buah-buahan segar
+              untuk menemani pengalaman berlari Anda.
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -889,7 +904,7 @@
 
         <div class="video-placeholder">
           <div>
-            <div class="play">▶</div>
+            <div class="video-play">▶</div>
             <h3>PTBRR 2027 Event Video</h3>
             <p>
               Event video coming soon. Stay tuned for more updates.
@@ -899,7 +914,7 @@
       </div>
     </section>
 
-    <!-- FINAL CTA -->
+    <!-- FINAL REGISTRATION -->
     <section class="final-cta">
       <div class="container">
         <div class="section-kicker">YOUR NEXT CHAPTER STARTS HERE</div>
@@ -909,7 +924,7 @@
           See you on 3 January 2027.
         </p>
 
-        <div class="button-row" style="justify-content:center;">
+        <div class="button-row">
           <a
             class="btn btn-primary"
             href="https://script.google.com/macros/s/AKfycbxVft1-IBL4soNTD_HJTzR7r6ly1fDZsHB1hIjjQM3KMpIdTkUMcmZOMa5IYDD5ygsk/exec?page=registration"
@@ -920,8 +935,7 @@
           </a>
 
           <a
-            class="btn"
-            style="background:#081b2b;color:#fff;"
+            class="btn btn-dark"
             href="https://script.google.com/macros/s/AKfycbxVft1-IBL4soNTD_HJTzR7r6ly1fDZsHB1hIjjQM3KMpIdTkUMcmZOMa5IYDD5ygsk/exec?page=alumni"
             target="_blank"
             rel="noopener noreferrer"
