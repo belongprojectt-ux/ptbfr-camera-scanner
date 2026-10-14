@@ -4,169 +4,446 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#092747">
+  <meta name="description" content="PTBRR 2027 — Bali Running Event. 3 Januari 2027, Pantai Pangkung Tibah, Tabanan, Bali.">
   <title>PTBRR 2027 | Bali Running Event</title>
+
   <style>
+    :root {
+      --navy: #092747;
+      --navy-light: #153e62;
+      --green: #58e5ad;
+      --green-dark: #087653;
+      --text: #183452;
+      --muted: #647991;
+      --bg: #f2f7fc;
+      --white: #ffffff;
+    }
+
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #172b4d;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
     }
 
-    header {
-      background: #172b4d;
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .navbar {
+      min-height: 76px;
+      padding: 16px 5%;
+      background: var(--navy);
       color: white;
-      padding: 20px;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 28px;
+    .brand {
+      color: white;
+      text-decoration: none;
+      font-size: 27px;
+      line-height: 1.1;
+      font-weight: 800;
+      letter-spacing: -1px;
     }
 
-    header p {
-      margin-bottom: 0;
-      color: #dce6f5;
+    .brand span {
+      display: block;
+      margin-top: 6px;
+      font-size: 10px;
+      letter-spacing: 4px;
+      font-weight: 600;
+      color: #c3d7e8;
     }
 
-    main {
-      max-width: 850px;
-      margin: 40px auto;
-      padding: 20px;
+    .nav-register {
+      display: inline-block;
+      padding: 14px 22px;
+      border-radius: 30px;
+      background: var(--green);
+      color: var(--navy);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+      transition: transform .2s, background .2s;
+    }
+
+    .nav-register:hover,
+    .primary-button:hover {
+      background: #8af2ca;
+      transform: translateY(-2px);
     }
 
     .hero {
-      background: white;
-      padding: 40px 24px;
-      border-radius: 16px;
-      text-align: center;
-      box-shadow: 0 4px 18px #172b4d12;
+      position: relative;
+      overflow: hidden;
+      min-height: 490px;
+      display: flex;
+      align-items: center;
+      padding: 65px 7%;
+      color: white;
+      background:
+        radial-gradient(ellipse at 80% 30%, #f5a85b55, transparent 38%),
+        linear-gradient(120deg, #061c33 0%, #123e5c 52%, #315f70 100%);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .65;
+      background:
+        linear-gradient(180deg, transparent 60%, #061c33 100%),
+        repeating-linear-gradient(
+          165deg,
+          transparent 0,
+          transparent 80px,
+          #ffffff08 81px,
+          transparent 83px
+        );
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 650px;
+    }
+
+    .eyebrow {
+      margin: 0 0 16px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(52px, 9vw, 100px);
+      line-height: .95;
+      letter-spacing: -4px;
+      font-weight: 900;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--green);
     }
 
     .hero h2 {
-      font-size: 32px;
-      margin-top: 0;
+      margin: 24px 0 12px;
+      font-size: clamp(23px, 4vw, 34px);
+      line-height: 1.2;
     }
 
-    .hero p {
-      line-height: 1.7;
-      color: #526176;
+    .hero-description {
+      max-width: 480px;
+      color: #e0eaf3;
+      font-size: 16px;
+      line-height: 1.8;
     }
 
-    .tag {
+    .primary-button {
       display: inline-block;
-      background: #e4f5eb;
-      color: #167344;
-      padding: 8px 14px;
-      border-radius: 30px;
-      font-size: 13px;
-      font-weight: bold;
+      margin-top: 18px;
+      padding: 17px 28px;
+      border-radius: 35px;
+      background: var(--green);
+      color: var(--navy);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 800;
+      transition: transform .2s, background .2s;
     }
-    
-.register-button {
-  text-decoration: none;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
 
-.register-button:hover {
-  background: #c9f0d9;
-}
-
-    .info {
+    .event-info {
+      position: relative;
+      z-index: 2;
+      width: 90%;
+      max-width: 1200px;
+      margin: -35px auto 0;
+      padding: 30px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 24px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      background: var(--white);
+      border: 1px solid #e4ebf3;
+      border-radius: 20px;
+      box-shadow: 0 12px 35px #09274712;
     }
 
-    .info div {
-      background: white;
-      padding: 20px 12px;
-      border-radius: 12px;
-      text-align: center;
+    .info-item {
+      min-width: 0;
+      padding: 8px 18px;
+      border-right: 1px solid #e0e8f1;
     }
 
-    .info strong {
+    .info-item:last-child {
+      border-right: none;
+    }
+
+    .info-label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 9px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
     }
 
-    .info span {
-      color: #64748b;
+    .info-item h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+
+    .info-item p {
+      margin: 0;
+      color: var(--muted);
       font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .announcement {
+      width: 90%;
+      max-width: 1200px;
+      margin: 35px auto 45px;
+      padding: 26px 30px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      border: 1px solid #d9e8f8;
+      border-radius: 16px;
+      background: #e5f2ff;
+    }
+
+    .announcement-icon {
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #1676d2;
+      color: white;
+      font-size: 23px;
+      font-weight: 800;
+    }
+
+    .announcement h2 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .announcement p {
+      margin: 0;
+      color: #425c78;
+      font-size: 15px;
+      line-height: 1.7;
     }
 
     footer {
-      text-align: center;
-      padding: 25px;
-      color: #64748b;
-      font-size: 13px;
+      padding: 24px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: var(--navy);
+      color: #c6d6e7;
+      font-size: 12px;
+      line-height: 1.6;
     }
 
-    @media (max-width: 600px) {
-      .info {
-        grid-template-columns: 1fr;
+    footer p {
+      margin: 0;
+    }
+
+    @media (max-width: 700px) {
+      .navbar {
+        padding: 15px 5%;
+        gap: 12px;
       }
 
-      .hero h2 {
-        font-size: 26px;
+      .brand {
+        font-size: 21px;
+      }
+
+      .brand span {
+        font-size: 8px;
+        letter-spacing: 2.5px;
+      }
+
+      .nav-register {
+        padding: 12px 14px;
+        font-size: 11px;
+      }
+
+      .hero {
+        min-height: 440px;
+        padding: 55px 7%;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
+
+      .hero-description {
+        font-size: 15px;
+      }
+
+      .event-info {
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding: 18px;
+      }
+
+      .info-item {
+        padding: 19px 8px;
+        border-right: none;
+        border-bottom: 1px solid #e0e8f1;
+      }
+
+      .info-item:last-child {
+        border-bottom: none;
+      }
+
+      .info-item h3 {
+        font-size: 19px;
+      }
+
+      .announcement {
+        padding: 20px;
+        gap: 13px;
+      }
+
+      .announcement h2 {
+        font-size: 17px;
+      }
+
+      .announcement p {
+        font-size: 14px;
+      }
+
+      footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
       }
     }
   </style>
 </head>
+
 <body>
-  <header>
-    <h1>PTBRR 2027</h1>
-    <p>Bali Running Event</p>
+  <header class="navbar">
+    <a class="brand" href="#home">
+      PTBRR 2027
+      <span>BALI RUNNING EVENT</span>
+    </a>
+
+    <a
+      class="nav-register"
+      href="https://script.google.com/macros/s/AKfycbxVft1-IBL4soNTD_HJTzR7r6ly1fDZsHB1hIjjQM3KMpIdTkUMcmZOMa5IYDD5ygsk/exec?page=registration"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      REGISTER NOW →
+    </a>
   </header>
 
-  <main>
+  <main id="home">
     <section class="hero">
-      
-<a
-  class="tag register-button"
-  href="https://script.google.com/macros/s/AKfycbxVft1-IBL4soNTD_HJTzR7r6ly1fDZsHB1hIjjQM3KMpIdTkUMcmZOMa5IYDD5ygsk/exec?page=registration"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  REGISTER NOW →
-</a>
+      <div class="hero-content">
+        <p class="eyebrow">Bali Running Event</p>
 
-      <h2>Run Beyond Your Limits</h2>
-      <p>
-        Bersiaplah untuk pengalaman berlari yang
-        berkesan bersama PTBRR 2027 di Bali.
-      </p>
-      <p>
-        Informasi tanggal, lokasi, kategori lomba,
-        dan pendaftaran akan segera diumumkan.
-      </p>
+        <h1>
+          PTBRR
+          <span>2027</span>
+        </h1>
+
+        <h2>Run Beyond Your Limits</h2>
+
+        <p class="hero-description">
+          Bersiaplah untuk pengalaman berlari yang berkesan
+          di Pantai Pangkung Tibah, Bali. Jadilah bagian
+          dari perjalanan PTBRR 2027.
+        </p>
+
+        <a
+          class="primary-button"
+          href="https://script.google.com/macros/s/AKfycbxVft1-IBL4soNTD_HJTzR7r6ly1fDZsHB1hIjjQM3KMpIdTkUMcmZOMa5IYDD5ygsk/exec?page=registration"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          REGISTER NOW →
+        </a>
+      </div>
     </section>
 
-    <section class="info">
-      <div>
-        <strong>LOKASI</strong>
-        <span>Bali, Indonesia</span>
+    <section class="event-info" aria-label="Informasi event">
+      <div class="info-item">
+        <span class="info-label">TANGGAL EVENT</span>
+        <h3>3 Januari 2027</h3>
+        <p>Minggu</p>
       </div>
-      <div>
-        <strong>EVENT</strong>
-        <span>PTBRR 2027</span>
+
+      <div class="info-item">
+        <span class="info-label">LOKASI START</span>
+        <h3>Pantai Pangkung Tibah</h3>
+        <p>Tabanan, Bali, Indonesia</p>
       </div>
+
+      <div class="info-item">
+        <span class="info-label">EVENT</span>
+        <h3>PTBRR 2027</h3>
+        <p>Bali Running Event</p>
+      </div>
+    </section>
+
+    <section class="announcement">
+      <div class="announcement-icon" aria-hidden="true">i</div>
       <div>
-        <strong>PENDAFTARAN</strong>
-        <span>Segera dibuka</span>
+        <h2>Informasi Kategori Lomba</h2>
+        <p>
+          Kategori lomba, detail rute, dan informasi teknis
+          lainnya akan diumumkan secara bertahap.
+          Ikuti pembaruan terbaru melalui website ini.
+        </p>
       </div>
     </section>
   </main>
 
   <footer>
-    &copy; 2027 PTBRR. All rights reserved.
+    <p>© 2027 PTBRR. All rights reserved.</p>
+    <p>Bali Running Event &nbsp; | &nbsp; Run Beyond Your Limits</p>
   </footer>
 </body>
 </html>
