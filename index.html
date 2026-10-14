@@ -967,162 +967,54 @@ const WEB_APP_URL =
      * ============================================================
      */
 
-    function onScanSuccess(
-      decodedText,
-      decodedResult
-    ) {
+    
+function onScanSuccess(decodedText) {
+  if (scanRedirecting) return;
 
-      if (scanRedirecting) {
+  const scanValue = String(decodedText || "").trim();
+  if (!scanValue) return;
 
-        return;
+  if (
+    scanValue === lastScannedText &&
+    Date.now() - lastScanTime < 3000
+  ) {
+    return;
+  }
 
-      }
+  lastScannedText = scanValue;
+  lastScanTime = Date.now();
 
+  let token = scanValue;
 
-      const now =
-        Date.now();
+  try {
+    const url = new URL(scanValue);
+    token =
+      url.searchParams.get("token") ||
+      url.searchParams.get("qrToken") ||
+      scanValue;
+  } catch (error) {
+    // QR berisi token langsung.
+  }
 
+  scanRedirecting = true;
+  showScanValue(scanValue);
 
-      /*
-       * Prevent duplicate scan.
-       */
+  setCameraStatus(
+    "QR berhasil dibaca. Membuka validasi peserta...",
+    "success"
+  );
 
-      if (
-        decodedText === lastScannedText &&
-        now - lastScanTime < 3000
-      ) {
-
-        return;
-
-      }
-
-
-      lastScannedText =
-        decodedText;
-
-
-      lastScanTime =
-        now;
-
-
-      /*
-       * Use COMPLETE QR CONTENT.
-       *
-       * Contoh:
-       *
-       * 5001
-       *
-       * I Gusti Made Dharma Putra Sesana
-       *
-       * PTBFR2026-0001
-       */
-
-      const scanValue =
-        String(
-          decodedText || ""
-        ).trim();
-
-
-      if (!scanValue) {
-
-        return;
-
-      }
-
-
-      console.log(
-        "QR CONTENT:",
-        scanValue
-      );
-
-
-      /*
-       * Display QR content.
-       */
-
-      showScanValue(
-        scanValue
-      );
-
-
-      /*
-       * Prevent multiple redirects.
-       */
-
-      scanRedirecting = true;
-
-
-      setCameraStatus(
-        "QR berhasil dibaca. Membuka data peserta...",
-        "success"
-      );
-
-
-      /*
-       * Stop camera before redirect.
-       */
-
-      stopCamera()
-        .catch(
-          function(error) {
-
-            console.error(
-              error
-            );
-
-          }
-        )
-        .finally(
-          function() {
-
-
-            /*
-             * ====================================================
-             * IMPORTANT
-             * ====================================================
-             *
-             * Gunakan parameter:
-             *
-             * ?bib=
-             *
-             * BUKAN:
-             *
-             * ?q=
-             *
-             * BUKAN:
-             *
-             * #5001
-             *
-             * ====================================================
-             */
-
-            const targetUrl =
-              WEB_APP_URL +
-              "?bib=" +
-              encodeURIComponent(
-                scanValue
-              );
-
-
-            console.log(
-              "Redirecting to:",
-              targetUrl
-            );
-
-
-            /*
-             * SAME TAB
-             *
-             * Tidak membuka tab baru.
-             */
-
-            window.location.href =
-              targetUrl;
-
-          }
-        );
-
-    }
+  stopCamera()
+    .catch(function(error) {
+      console.error(error);
+    })
+    .finally(function() {
+      window.location.href =
+        WEB_APP_URL +
+        "?page=scan&token=" +
+        encodeURIComponent(token);
+    });
+}
 
 
     /*
