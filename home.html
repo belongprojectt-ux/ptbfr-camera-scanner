@@ -633,6 +633,39 @@
         font-size: 20px;
       }
     }
+    .price-card {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.price-card:hover:not(.price-disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(8, 27, 43, 0.10);
+}
+
+.price-card:focus-visible {
+  outline: 3px solid #164E70;
+  outline-offset: 4px;
+}
+
+.price-card.price-disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.price-status {
+  margin-top: 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.price-status:empty {
+  display: none;
+}
   </style>
 </head>
 
@@ -798,29 +831,47 @@
         </div>
 
         <div class="price-grid">
-  <article class="price-card">
+
+  <!-- ALUMNI PRICE -->
+  <a href="https://script.google.com/macros/s/AKfycbxVft1-IBL4soNTD_HJTzR7r6ly1fDZsHB1hIjjQM3KMpIdTkUMcmZOMa5IYDD5ygsk/exec?page=alumni"
+     class="price-card"
+     data-price-period="alumni">
     <div class="price-period">Alumni Price</div>
     <div class="price-amount">Rp400.000</div>
     <div class="price-date">Special price for verified alumni</div>
-  </article>
+    <div class="price-status"></div>
+  </a>
 
-  <article class="price-card featured">
+  <!-- EARLY BIRD -->
+  <a href="https://script.google.com/macros/s/AKfycbxVft1-IBL4soNTD_HJTzR7r6ly1fDZsHB1hIjjQM3KMpIdTkUMcmZOMa5IYDD5ygsk/exec?page=registration"
+     class="price-card featured"
+     data-price-period="earlybird">
     <div class="price-period">Early Bird Price</div>
     <div class="price-amount">Rp450.000</div>
     <div class="price-date">1 November – 1 December 2026</div>
-  </article>
+    <div class="price-status"></div>
+  </a>
 
-  <article class="price-card">
+  <!-- REGULAR -->
+  <a href="https://script.google.com/macros/s/AKfycbxVft1-IBL4soNTD_HJTzR7r6ly1fDZsHB1hIjjQM3KMpIdTkUMcmZOMa5IYDD5ygsk/exec?page=registration"
+     class="price-card"
+     data-price-period="regular">
     <div class="price-period">Regular Price</div>
     <div class="price-amount">Rp500.000</div>
     <div class="price-date">2 December – 20 December 2026</div>
-  </article>
+    <div class="price-status"></div>
+  </a>
 
-  <article class="price-card">
+  <!-- LAST CALL -->
+  <a href="https://script.google.com/macros/s/AKfycbxVft1-IBL4soNTD_HJTzR7r6ly1fDZsHB1hIjjQM3KMpIdTkUMcmZOMa5IYDD5ygsk/exec?page=registration"
+     class="price-card"
+     data-price-period="lastcall">
     <div class="price-period">Last Call Price</div>
     <div class="price-amount">Rp550.000</div>
     <div class="price-date">21 December – 31 December 2026</div>
-  </article>
+    <div class="price-status"></div>
+  </a>
+
 </div>
 
         <p class="price-note">
@@ -979,6 +1030,70 @@
     PTBRR · RUN. EXPLORE. EXPERIENCE.<br>
     Pantai Pangkung Tibah, Tabanan, Bali
   </footer>
+<script>
+(function () {
+  const today = new Date(
+    new Date().toLocaleString("en-US", {
+      timeZone: "Asia/Makassar"
+    })
+  );
 
+  const dateKey = today.getFullYear() * 10000
+    + (today.getMonth() + 1) * 100
+    + today.getDate();
+
+  const periods = {
+    earlybird: {
+      start: 20261101,
+      end: 20261201,
+      label: "EARLY BIRD"
+    },
+    regular: {
+      start: 20261202,
+      end: 20261220,
+      label: "REGULAR"
+    },
+    lastcall: {
+      start: 20261221,
+      end: 20261231,
+      label: "LAST CALL"
+    }
+  };
+
+  document.querySelectorAll("[data-price-period]").forEach(card => {
+    const key = card.dataset.pricePeriod;
+    const status = card.querySelector(".price-status");
+    const period = periods[key];
+
+    let active = false;
+
+    if (period) {
+      active = dateKey >= period.start && dateKey <= period.end;
+      status.textContent = active
+        ? "REGISTER NOW ↗"
+        : dateKey < period.start
+          ? "COMING SOON"
+          : "REGISTRATION CLOSED";
+    } else {
+      status.textContent = "ALUMNI REGISTRATION";
+    }
+
+    if (key === "alumni") {
+      active = false;
+    }
+
+    if (!active) {
+      card.classList.add("price-disabled");
+      card.removeAttribute("href");
+      card.setAttribute("aria-disabled", "true");
+      card.setAttribute("tabindex", "-1");
+    } else {
+      card.classList.remove("price-disabled");
+      card.setAttribute("aria-disabled", "false");
+      card.setAttribute("tabindex", "0");
+    }
+  });
+})();
+</script>
 </body>
 </html>
