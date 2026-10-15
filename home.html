@@ -67,6 +67,13 @@
       color: var(--green);
     }
 
+    .header-right { display: flex; align-items: center; gap: 18px; }
+
+    .language-switch { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+    .language-button { border: 1px solid rgba(255,255,255,.28); background: transparent; color: #fff; border-radius: 6px; padding: 7px 9px; font-size: 11px; font-weight: 800; cursor: pointer; }
+    .language-button[aria-pressed="true"] { background: var(--green); color: var(--navy); border-color: var(--green); }
+    .language-divider { color: #b7c5cf; }
+
     .nav-note {
       font-size: 11px;
       letter-spacing: 1.5px;
@@ -541,6 +548,8 @@
     }
 
     @media (max-width: 760px) {
+      .header-right { flex-direction: column; align-items: flex-end; gap: 8px; }
+      .language-button { padding: 6px 7px; font-size: 10px; }
       .nav-note {
         font-size: 9px;
         letter-spacing: .7px;
@@ -674,7 +683,14 @@
   <header>
     <div class="container nav">
       <div class="brand">PTBRR <span>2027</span></div>
-      <div class="nav-note">RUN · EXPLORE · EXPERIENCE</div>
+      <div class="header-right">
+        <div class="nav-note">RUN · EXPLORE · EXPERIENCE</div>
+        <div class="language-switch" role="group" aria-label="Pilih bahasa / Choose language">
+          <button type="button" class="language-button" data-lang="id" aria-pressed="true">🇮🇩 ID</button>
+          <span class="language-divider">|</span>
+          <button type="button" class="language-button" data-lang="en" aria-pressed="false">🇬🇧 EN</button>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -1031,6 +1047,152 @@
     PTBRR · RUN. EXPLORE. EXPERIENCE.<br>
     Pantai Pangkung Tibah, Tabanan, Bali
   </footer>
+<script>
+(function () {
+  const translations = {
+    id: {
+      '.eyebrow': 'CERITA LARI BERIKUTNYA DIMULAI DI SINI',
+      'h1': 'BERLARI DI<br>TEPI <span>PANTAI.</span>',
+      '.hero-description': 'Satu garis pantai. Satu tantangan. Setiap langkah punya cerita. Bergabunglah dalam Pangkung Tibah Beach Run 2027 dan rasakan keindahan Bali melalui pengalaman berlari yang berkesan.',
+      '.hero-facts .fact:nth-child(1) .fact-label': 'TANGGAL ACARA',
+      '.hero-facts .fact:nth-child(2) .fact-label': 'LOKASI',
+      '.hero-facts .fact:nth-child(3) .fact-label': 'KATEGORI LARI',
+      '.button-row .btn-primary': 'DAFTAR SEKARANG',
+      '.hero .btn-outline': 'DAFTAR ALUMNI PTBFR 2026',
+      '.hero-note': 'Jelajahi rute, informasi lomba, hadiah, dan manfaat untuk pelari di bawah ini.',
+      '.section-heading .section-kicker': null,
+      'main > section:nth-of-type(2) .section-kicker': 'TANTANGAN',
+      'main > section:nth-of-type(2) h2': 'Satu Jarak. Untuk Semua Pelari.',
+      'main > section:nth-of-type(2) .section-description': 'Taklukkan rute 15,7 KM di sekitar kawasan Pangkung Tibah.',
+      'main > section:nth-of-type(3) .section-kicker': 'HADIAH',
+      'main > section:nth-of-type(3) h2': 'Hadiah Podium',
+      'main > section:nth-of-type(3) .section-description': 'Berlari dengan kuat. Tantang diri Anda. Jadikan setiap langkah berarti.',
+      '.prize-card:nth-child(1) .prize-place': 'Juara 1',
+      '.prize-card:nth-child(2) .prize-place': 'Juara 2',
+      '.prize-card:nth-child(3) .prize-place': 'Juara 3',
+      '.prize-caption': 'Hadiah Tunai',
+      'main > section:nth-of-type(4) .section-kicker': 'ISI ULANG & NIKMATI',
+      'main > section:nth-of-type(5) .section-kicker': 'PERLENGKAPAN LARI',
+      'main > section:nth-of-type(6) .section-kicker': 'PENDAFTARAN',
+      'main > section:nth-of-type(7) .section-kicker': 'RASAKAN PENGALAMANNYA',
+      'main > section:nth-of-type(8) .section-kicker': 'TEMUKAN RUTE',
+      'main > section:nth-of-type(4) h2': 'Free-Flow Refreshment',
+      'main > section:nth-of-type(4) .section-description': 'Bagian menyegarkan dari pengalaman hari perlombaan Anda.',
+      'main > section:nth-of-type(5) h2': 'Setiap Pelari Mendapatkan',
+      'main > section:nth-of-type(5) .section-description': 'Perlengkapan penting yang disiapkan untuk pengalaman berlari Anda.',
+      'main > section:nth-of-type(6) h2': 'Pilih Periode Pendaftaran',
+      'main > section:nth-of-type(6) .section-description': 'Harga pendaftaran untuk kategori 15,7 KM All Open.',
+      'main > section:nth-of-type(7) h2': 'Sampai Jumpa di Pantai',
+      'main > section:nth-of-type(7) .section-description': 'Bersiaplah untuk berlari, menjelajah, dan menikmati Pangkung Tibah.',
+      'main > section:nth-of-type(8) h2': 'Rute Lomba',
+      'main > section:nth-of-type(8) .section-description': 'Jelajahi referensi rute dan lokasi melalui Google Earth.',
+      '.refreshment-card h3': 'Sajian Gratis & Kuliner UMKM Lokal',
+      '.refreshment-card p': 'Nikmati beragam sajian dan minuman gratis, dengan pilihan kuliner UMKM lokal, jajanan tradisional, dan buah-buahan segar untuk menemani pengalaman berlari Anda.',
+      '.benefit-grid .benefit-card:nth-child(1) h3': 'Jersey Acara',
+      '.benefit-grid .benefit-card:nth-child(2) h3': 'Medali Finisher',
+      '.benefit-grid .benefit-card:nth-child(3) h3': 'Nomor BIB',
+      '.price-grid .price-card:nth-child(1) .price-period': 'Harga Alumni',
+      '.price-grid .price-card:nth-child(1) .price-date': 'Harga khusus untuk alumni terverifikasi',
+      '.price-grid .price-card:nth-child(2) .price-period': 'Harga Early Bird',
+      '.price-grid .price-card:nth-child(3) .price-period': 'Harga Reguler',
+      '.price-grid .price-card:nth-child(4) .price-period': 'Harga Last Call',
+      '.price-note': 'Silakan lihat formulir pendaftaran resmi untuk informasi ketersediaan pendaftaran dan petunjuk pembayaran.',
+      '.video-placeholder h3': 'Video Acara PTBRR 2027',
+      '.video-placeholder p': 'Video acara segera hadir. Nantikan informasi selanjutnya.',
+      '.route-card h3': 'Pangkung Tibah, Tabanan',
+      '.route-card p': 'Lihat referensi rute Google Earth dan periksa informasi rute resmi terbaru sebelum hari perlombaan.',
+      '.route-card .btn': 'LIHAT RUTE ↗',
+      '.final-cta .section-kicker': 'LANGKAH BERIKUTNYA DIMULAI DI SINI',
+      '.final-cta h2': 'Setiap Langkah Punya Cerita.',
+      '.final-cta p': 'Jadilah bagian dari Pangkung Tibah Beach Run 2027. Sampai jumpa pada 3 Januari 2027.',
+      '.final-cta .btn-primary': 'DAFTAR SEKARANG',
+      '.final-cta .btn-dark': 'DAFTAR ALUMNI PTBFR 2026'
+    },
+    en: {
+      '.eyebrow': 'YOUR NEXT RUNNING STORY',
+      'h1': 'RUN BY<br>THE <span>BEACH.</span>',
+      '.hero-description': 'One coastline. One challenge. Every step tells a story. Join Pangkung Tibah Beach Run 2027 and experience the beauty of Bali through a memorable running journey.',
+      '.hero-facts .fact:nth-child(1) .fact-label': 'EVENT DATE',
+      '.hero-facts .fact:nth-child(2) .fact-label': 'LOCATION',
+      '.hero-facts .fact:nth-child(3) .fact-label': 'RACE CATEGORY',
+      '.button-row .btn-primary': 'REGISTER NOW',
+      '.hero .btn-outline': 'REGISTER ALUMNI PTBFR 2026',
+      '.hero-note': 'Explore the route, race information, prizes and runner benefits below.',
+      'main > section:nth-of-type(2) .section-kicker': 'THE CHALLENGE',
+      'main > section:nth-of-type(2) h2': 'One Distance. Every Runner.',
+      'main > section:nth-of-type(2) .section-description': 'Take on the 15.7 KM course around the Pangkung Tibah area.',
+      'main > section:nth-of-type(3) .section-kicker': 'THE REWARD',
+      'main > section:nth-of-type(3) h2': 'Cash Podium',
+      'main > section:nth-of-type(3) .section-description': 'Run strong. Challenge yourself. Make every step count.',
+      '.prize-card:nth-child(1) .prize-place': '1st Place',
+      '.prize-card:nth-child(2) .prize-place': '2nd Place',
+      '.prize-card:nth-child(3) .prize-place': '3rd Place',
+      '.prize-caption': 'Cash Prize',
+      'main > section:nth-of-type(4) .section-kicker': 'REFUEL & ENJOY',
+      'main > section:nth-of-type(5) .section-kicker': 'YOUR RACE ESSENTIALS',
+      'main > section:nth-of-type(6) .section-kicker': 'REGISTRATION',
+      'main > section:nth-of-type(7) .section-kicker': 'FEEL THE EXPERIENCE',
+      'main > section:nth-of-type(8) .section-kicker': 'FIND YOUR WAY',
+      'main > section:nth-of-type(4) h2': 'Free-Flow Refreshment',
+      'main > section:nth-of-type(4) .section-description': 'A refreshing part of your race-day experience.',
+      'main > section:nth-of-type(5) h2': 'Every Runner Gets',
+      'main > section:nth-of-type(5) .section-description': 'Race essentials prepared for your running experience.',
+      'main > section:nth-of-type(6) h2': 'Choose Your Registration Period',
+      'main > section:nth-of-type(6) .section-description': 'Registration prices for the 15.7 KM All Open category.',
+      'main > section:nth-of-type(7) h2': 'See You at the Beach',
+      'main > section:nth-of-type(7) .section-description': 'Get ready to run, explore and experience Pangkung Tibah.',
+      'main > section:nth-of-type(8) h2': 'The Race Route',
+      'main > section:nth-of-type(8) .section-description': 'Explore the route reference and location in Google Earth.',
+      '.refreshment-card h3': 'Complimentary Refreshments & Local Food',
+      '.refreshment-card p': 'Enjoy a variety of complimentary food and drinks, including local small-business specialties, traditional snacks, and fresh fruit to complement your running experience.',
+      '.benefit-grid .benefit-card:nth-child(1) h3': 'Event Jersey',
+      '.benefit-grid .benefit-card:nth-child(2) h3': 'Finisher Medal',
+      '.benefit-grid .benefit-card:nth-child(3) h3': 'Race BIB',
+      '.price-grid .price-card:nth-child(1) .price-period': 'Alumni Price',
+      '.price-grid .price-card:nth-child(1) .price-date': 'Special price for verified alumni',
+      '.price-grid .price-card:nth-child(2) .price-period': 'Early Bird Price',
+      '.price-grid .price-card:nth-child(3) .price-period': 'Regular Price',
+      '.price-grid .price-card:nth-child(4) .price-period': 'Last Call Price',
+      '.price-note': 'Please refer to the official registration form for registration availability and payment instructions.',
+      '.video-placeholder h3': 'PTBRR 2027 Event Video',
+      '.video-placeholder p': 'Event video coming soon. Stay tuned for more updates.',
+      '.route-card h3': 'Pangkung Tibah, Tabanan',
+      '.route-card p': 'View the Google Earth route reference and check the latest official route information before race day.',
+      '.route-card .btn': 'VIEW ROUTE ↗',
+      '.final-cta .section-kicker': 'YOUR NEXT CHAPTER STARTS HERE',
+      '.final-cta h2': 'Every Step Tells a Story.',
+      '.final-cta p': 'Be part of Pangkung Tibah Beach Run 2027. See you on 3 January 2027.',
+      '.final-cta .btn-primary': 'REGISTER NOW',
+      '.final-cta .btn-dark': 'REGISTER ALUMNI PTBFR 2026'
+    }
+  };
+  const base = {};
+  const selectors = [...new Set(Object.keys(translations.id).concat(Object.keys(translations.en)))].filter(k => translations.id[k] !== null || translations.en[k] !== null);
+  selectors.forEach(sel => {
+    try { base[sel] = [...document.querySelectorAll(sel)].map(el => el.innerHTML); } catch (e) {}
+  });
+  function setLanguage(lang) {
+    const dict = translations[lang] || translations.id;
+    selectors.forEach(sel => {
+      if (dict[sel] === undefined || dict[sel] === null) return;
+      let els;
+      try { els = document.querySelectorAll(sel); } catch (e) { return; }
+      els.forEach((el, i) => {
+        const val = Array.isArray(dict[sel]) ? dict[sel][i] : dict[sel];
+        if (val !== undefined) el.innerHTML = val;
+      });
+    });
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.language-button').forEach(btn => btn.setAttribute('aria-pressed', String(btn.dataset.lang === lang)));
+    try { localStorage.setItem('ptbrr2027-language', lang); } catch (e) {}
+  }
+  document.querySelectorAll('.language-button').forEach(btn => btn.addEventListener('click', () => setLanguage(btn.dataset.lang)));
+  let initial = 'id';
+  try { const saved = localStorage.getItem('ptbrr2027-language'); if (saved === 'id' || saved === 'en') initial = saved; } catch (e) {}
+  setLanguage(initial);
+})();
+</script>
+
 <script>
 (function () {
   const today = new Date(
