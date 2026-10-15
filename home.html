@@ -1079,8 +1079,9 @@
     }
 
     if (key === "alumni") {
-      active = false;
-    }
+  active = true;
+  status.textContent = "ALUMNI REGISTRATION ↗";
+}
 
     if (!active) {
       card.classList.add("price-disabled");
